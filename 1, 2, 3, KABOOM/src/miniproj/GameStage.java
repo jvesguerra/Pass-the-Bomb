@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class GameStage {
-	public static final int WINDOW_HEIGHT = 500;
-	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 800;
+	public static final int WINDOW_WIDTH = 1300;
 	private Scene scene;
 	private Stage stage;
 	private Group root;
@@ -38,7 +38,7 @@ public class GameStage {
 		//set stage elements here
 		this.root.getChildren().add(canvas);
 
-		this.stage.setTitle("1...2...3...KABOOM");
+		this.stage.setTitle("Star Wars Shooting Game");
 		this.stage.setScene(this.scene);
 
 		//invoke the start method of the animation timer
