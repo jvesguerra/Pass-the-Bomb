@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class GameStage {
-	public static final int WINDOW_HEIGHT = 800;
-	public static final int WINDOW_WIDTH = 1300;
+	public static final int WINDOW_HEIGHT = 720;
+	public static final int WINDOW_WIDTH = 1280;
 	private Scene scene;
 	private Stage stage;
 	private Group root;
