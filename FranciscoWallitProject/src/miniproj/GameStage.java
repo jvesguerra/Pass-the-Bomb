@@ -38,7 +38,7 @@ public class GameStage {
 		//set stage elements here
 		this.root.getChildren().add(canvas);
 
-		this.stage.setTitle("Star Wars Shooting Game");
+		this.stage.setTitle("1...2...3...KABOOM");
 		this.stage.setScene(this.scene);
 
 		//invoke the start method of the animation timer
