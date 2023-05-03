@@ -3,8 +3,8 @@ package miniproj;
 import javafx.scene.image.Image;
 
 public abstract class Bomb extends Sprite {
-	public final static int POWERUP_WIDTH = 15;
-	public final static int POWERUP_HEIGHT = 15;
+	public final static int BOMB_WIDTH = 100;
+	public final static int BOMB_HEIGHT = 100;
 	public static final int POWERUP_DESPAWN_TIME = 5;
 	private int availabityTimeElapsed;
 
