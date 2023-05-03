@@ -30,7 +30,7 @@ public class GameTimer extends AnimationTimer{
 	private int previousSecond = -1;
 	public static final double SPAWN_TIME = 5.0d;
 	public static final double POWERUP_SPAWN_TIME = 10.0d;
-	public static final double BOSS_SPAWN_TIME = 30.0d;
+	//public static final double BOSS_SPAWN_TIME = 30.0d;
 
 
 	public final Image bg = new Image("images/background.jpg",GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT,false,false);
@@ -54,9 +54,9 @@ public class GameTimer extends AnimationTimer{
 //			if((int)(time%GameTimer.SPAWN_TIME) == 0) {
 //				this.spawnNewEnemies();
 //			}
-			if((int)time == (int)GameTimer.BOSS_SPAWN_TIME) {
-				this.spawnBossEnemy();
-			}
+//			if((int)time == (int)GameTimer.BOSS_SPAWN_TIME) {
+//				this.spawnBossEnemy();
+//			}
 			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
 				this.spawnPowerUps();
 			}
@@ -189,12 +189,12 @@ public class GameTimer extends AnimationTimer{
 //		}
 //	}
 
-	private void spawnBossEnemy() { //add boss at 30 seconds
-		Random r = new Random();
-		int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.DEATHSTAR_SIZE); //it won't succeed window height
-		this.enemies.add(new Enemy(x, y, 1));
-	}
+//	private void spawnBossEnemy() { //add boss at 30 seconds
+//		Random r = new Random();
+//		int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
+//		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.DEATHSTAR_SIZE); //it won't succeed window height
+//		this.enemies.add(new Enemy(x, y, 1));
+//	}
 
 	//method that will move the bullets shot by a ship
 	private void moveBullets(){
