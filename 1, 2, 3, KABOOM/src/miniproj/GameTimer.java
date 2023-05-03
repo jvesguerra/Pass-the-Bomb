@@ -22,8 +22,8 @@ public class GameTimer extends AnimationTimer{
 	private ArrayList<Enemy> enemies;
 	private ArrayList<PowerUps> powerups;
 
-	public static final int MAX_NUM_ENEMIES = 7; //also the initial enemies spawned
-	public static final int NEW_SPAWN_ENEMIES = 3;
+	public static final int PLAYERS = 3; //also the initial enemies spawned
+	//public static final int NEW_SPAWN_ENEMIES = 3;
 
 	private double currentTime = System.nanoTime();
 
@@ -51,9 +51,9 @@ public class GameTimer extends AnimationTimer{
 		double time = (currentNanoTime - currentTime)/1000000000.0;
 
 		if(previousSecond != (int)time && (int)time != 0) {
-			if((int)(time%GameTimer.SPAWN_TIME) == 0) {
-				this.spawnNewEnemies();
-			}
+//			if((int)(time%GameTimer.SPAWN_TIME) == 0) {
+//				this.spawnNewEnemies();
+//			}
 			if((int)time == (int)GameTimer.BOSS_SPAWN_TIME) {
 				this.spawnBossEnemy();
 			}
@@ -173,21 +173,21 @@ public class GameTimer extends AnimationTimer{
 	//method that will spawn/instantiate seven enemies at a random x,y location
 	private void spawnEnemies(){ //initial
 		Random r = new Random();
-		for(int i=0;i<GameTimer.MAX_NUM_ENEMIES;i++){
+		for(int i=0;i<GameTimer.PLAYERS;i++){
 			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
 			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
 			this.enemies.add(new Enemy(x, y, 0));
 		}
 	}
 
-	private void spawnNewEnemies() { //add enemies at certain interval
-		Random r = new Random();
-		for(int i=0;i<GameTimer.NEW_SPAWN_ENEMIES;i++){
-			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
-			this.enemies.add(new Enemy(x, y, 0));
-		}
-	}
+//	private void spawnNewEnemies() { //add enemies at certain interval
+//		Random r = new Random();
+//		for(int i=0;i<GameTimer.NEW_SPAWN_ENEMIES;i++){
+//			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
+//			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
+//			this.enemies.add(new Enemy(x, y, 0));
+//		}
+//	}
 
 	private void spawnBossEnemy() { //add boss at 30 seconds
 		Random r = new Random();
