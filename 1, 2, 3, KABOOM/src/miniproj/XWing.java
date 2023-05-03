@@ -12,28 +12,33 @@ public class XWing extends Sprite{
 	private boolean invincibility;
 	private int invincibilityElapsed;
 	private int invincibilityDuration;
+	private int type = 0; // 0 has a bomb; 1 no bomb
 
 	private ArrayList<Bullet> bullets;
-	private final static Image XWING_IMAGE = new Image("images/x_wing.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	private final static Image PLAYER_RIGHT = new Image("images/move_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER_LEFT = new Image("images/move_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER_DOWN = new Image("images/move_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER_UP = new Image("images/move_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image HAS_BOMB = new Image("images/karina_2.jpeg",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	private final static Image XWING_INVINCIBLE_IMAGE = new Image("images/x_wing_invincible.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	private final static int XWING_SIZE = 50;
 
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
 
-	public static final int XWING_SPEED = 10;
+	public static final int XWING_SPEED = 3;
 
 	private int score = 0;
 
 	public XWing(String name, int x, int y){
-		super(x,y,XWing.XWING_IMAGE);
+		super(x,y,XWing.PLAYER_LEFT);
 		this.name = name;
 		Random r = new Random();
 		this.strength = r.nextInt(51)+100; //strength starts from 100-150
 		this.alive = true;
 		this.invincibility = false;
 		this.bullets = new ArrayList<Bullet>();
-		System.out.println("Strength: " + this.strength); //practice checker
+		//System.out.println("Strength: " + this.strength); //practice checker
 	}
 
 	public boolean isInvincible() {
@@ -64,11 +69,45 @@ public class XWing extends Sprite{
 		this.invincibilityDuration = invincibilityDuration;
 	}
 
+
+	void hasBomb() {
+		this.setImage(HAS_BOMB);
+		this.type = 1;
+	}
+
+	void faceRight() {
+		if(this.type == 0){
+			this.setImage(PLAYER_RIGHT);
+		}
+
+	}
+
+	void faceLeft() {
+		if(this.type == 0){
+			this.setImage(PLAYER_LEFT);
+		}
+	}
+
+	void faceDown() {
+		if(this.type == 0){
+			this.setImage(PLAYER_DOWN);
+		}
+	}
+
+	void faceUp() {
+		if(this.type == 0){
+			this.setImage(PLAYER_UP);
+		}
+	}
+
+
+
+
 	void setInvincibilityElapsed() {
 		this.invincibilityElapsed += 1;
 		if(this.invincibilityElapsed == this.invincibilityDuration) {
 			this.invincibility = false;
-			this.setImage(XWING_IMAGE);
+			this.setImage(PLAYER_RIGHT);
 		}
 	}
 
