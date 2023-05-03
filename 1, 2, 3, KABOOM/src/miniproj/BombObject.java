@@ -3,10 +3,10 @@ package miniproj;
 import javafx.scene.image.Image;
 
 public class BombObject extends Bomb{
-	public final static Image ORB_IMAGE = new Image("images/orb.png",PowerUps.POWERUP_WIDTH,PowerUps.POWERUP_HEIGHT,false,false);
+	public final static Image BOMB_IMAGE = new Image("images/bomb_object.png",Bomb.BOMB_WIDTH,Bomb.BOMB_HEIGHT,false,false);
 
 	public BombObject(int x, int y) {
-		super(x, y, Orb.ORB_IMAGE);
+		super(x, y, BombObject.BOMB_IMAGE);
 	}
 
 	void checkCollision(XWing xwing) {

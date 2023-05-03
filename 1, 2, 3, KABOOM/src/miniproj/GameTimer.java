@@ -46,6 +46,7 @@ public class GameTimer extends AnimationTimer{
 		this.powerups = new ArrayList<PowerUps>();
 		this.bombs = new ArrayList<Bomb>();
 		this.spawnEnemies();
+		this.spawnBomb();
 		this.handleKeyPressEvent();
 	}
 
@@ -86,6 +87,7 @@ public class GameTimer extends AnimationTimer{
 		this.renderEnemies();
 		this.renderBullets();
 		this.renderPowerUps();
+		this.renderBomb();
 
 		this.gameCheck(time);
 		this.drawDetails(time);
@@ -134,22 +136,22 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void renderBomb() {
-		for(PowerUps p: this.powerups) {
+		for(Bomb p: this.bombs) {
 			p.render(this.gc);
 		}
 	}
 
-//	private void spawnBomb() {
-//		Bomb newBomb;
-//		Random r = new Random();
-//		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
-//		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Bomb.POWERUP_HEIGHT); //it won't succeed window height
-//
-//		int type = r.nextInt(2);
-//		newBomb = new Enemy(x,y);
-//
-//		this.bombs.add(newBomb);
-//	}
+	private void spawnBomb() {
+		Bomb newBomb;
+		Random r = new Random();
+		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
+		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Bomb.BOMB_HEIGHT); //it won't succeed window height
+
+		int type = r.nextInt(2);
+		newBomb = new BombObject(x,y);
+
+		this.bombs.add(newBomb);
+	}
 
 
 	private void renderPowerUps() {
