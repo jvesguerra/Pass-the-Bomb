@@ -21,6 +21,8 @@ public class GameTimer extends AnimationTimer{
 	private XWing xwing;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<PowerUps> powerups;
+	private ArrayList<Bomb> bombs;
+
 
 	public static final int PLAYERS = 3; //also the initial enemies spawned
 	//public static final int NEW_SPAWN_ENEMIES = 3;
@@ -42,6 +44,7 @@ public class GameTimer extends AnimationTimer{
 		this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
 		this.enemies = new ArrayList<Enemy>();
 		this.powerups = new ArrayList<PowerUps>();
+		this.bombs = new ArrayList<Bomb>();
 		this.spawnEnemies();
 		this.handleKeyPressEvent();
 	}
@@ -129,6 +132,25 @@ public class GameTimer extends AnimationTimer{
 			b.render(this.gc);
 		}
 	}
+
+	private void renderBomb() {
+		for(PowerUps p: this.powerups) {
+			p.render(this.gc);
+		}
+	}
+
+//	private void spawnBomb() {
+//		Bomb newBomb;
+//		Random r = new Random();
+//		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
+//		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Bomb.POWERUP_HEIGHT); //it won't succeed window height
+//
+//		int type = r.nextInt(2);
+//		newBomb = new Enemy(x,y);
+//
+//		this.bombs.add(newBomb);
+//	}
+
 
 	private void renderPowerUps() {
 		for(PowerUps p: this.powerups) {
