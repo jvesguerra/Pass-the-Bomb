@@ -23,7 +23,7 @@ public abstract class PowerUps extends Sprite {
 			this.despawn();
 		}
 	}
-
+	
 	void despawn() {
 		this.setVisible(false);
 	}
