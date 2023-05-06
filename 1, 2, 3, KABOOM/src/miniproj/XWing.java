@@ -21,14 +21,18 @@ public class XWing extends Sprite{
 	public final static Image PLAYER_UP = new Image("images/move_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image HAS_BOMB = new Image("images/karina_2.jpeg",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	private final static Image XWING_INVINCIBLE_IMAGE = new Image("images/x_wing_invincible.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	private final static int XWING_SIZE = 50;
 
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
 
 	public static final int XWING_SPEED = 3;
+	public final static int XWING_SIZE = 50;
 
 	private int score = 0;
+
+	// temp
+	private boolean moveRight;
+	private int speed;
 
 	public XWing(String name, int x, int y){
 		super(x,y,XWing.PLAYER_LEFT);
@@ -39,6 +43,10 @@ public class XWing extends Sprite{
 		this.invincibility = false;
 		this.bullets = new ArrayList<Bullet>();
 		//System.out.println("Strength: " + this.strength); //practice checker
+
+		// temp
+		this.speed = 2;
+		this.moveRight = false;
 	}
 
 	public boolean isInvincible() {
@@ -58,6 +66,10 @@ public class XWing extends Sprite{
 		return this.score;
 	}
 
+	public int getType() {
+		return this.type;
+	}
+
 	public int getStrength() {
 		return this.strength;
 	}
@@ -71,8 +83,15 @@ public class XWing extends Sprite{
 
 
 	void hasBomb() {
-		this.setImage(HAS_BOMB);
-		this.type = 1;
+		if(this.type == 1){
+			this.setImage(PLAYER_LEFT);
+			this.type = 0;
+
+		}else{
+			this.setImage(HAS_BOMB);
+			this.type = 1;
+		}
+
 	}
 
 	void faceRight() {
@@ -99,9 +118,6 @@ public class XWing extends Sprite{
 			this.setImage(PLAYER_UP);
 		}
 	}
-
-
-
 
 	void setInvincibilityElapsed() {
 		this.invincibilityElapsed += 1;
@@ -136,6 +152,22 @@ public class XWing extends Sprite{
 		}
 	}
 
+	// ai move
+	//method that changes the x position of the enemy
+	void moveAi(){
+		if(this.moveRight == true && this.x <= GameStage.WINDOW_WIDTH-this.width) { //continue moving to the right
+			this.x += this.speed;
+		} else if(this.moveRight == true && this.x >= GameStage.WINDOW_WIDTH-this.width) { //will move to the left (since it moves to right and reached the window width)
+			this.moveRight = !this.moveRight;
+			if(this.type==0) this.setImage(PLAYER_LEFT);
+		} else if(this.moveRight == false && this.x >= 0){ //continue moving to the left
+			this.x -= this.speed;
+		} else {
+			this.moveRight = !this.moveRight; //will move to the right (since it moves to left and reached the window width)
+			if(this.type==0) this.setImage(PLAYER_RIGHT);
+		}
+	}
+
 	void decreaseStrength(int type) { //hit
 		if(type == 0) { //normal enemy hit the XWing
 			this.strength-=30;
@@ -161,5 +193,21 @@ public class XWing extends Sprite{
 
 	void setScore() {
 		this.score+=1;
+	}
+
+	public boolean isAvailable() {
+		return this.getVisible();
+	}
+
+	// Added
+
+	void despawn() {
+		this.setVisible(false);
+	}
+
+	void checkCollision(XWing xwing, XWing dest) {
+		if(this.collidesWith(xwing)) {
+			dest.hasBomb();
+		}
 	}
 }

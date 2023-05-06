@@ -22,6 +22,7 @@ public class GameTimer extends AnimationTimer{
 	private ArrayList<Enemy> enemies;
 	private ArrayList<PowerUps> powerups;
 
+	private ArrayList<XWing> players;
 
 	public static final int PLAYERS = 3; //also the initial enemies spawned
 	//public static final int NEW_SPAWN_ENEMIES = 3;
@@ -43,7 +44,11 @@ public class GameTimer extends AnimationTimer{
 		this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
 		this.enemies = new ArrayList<Enemy>();
 		this.powerups = new ArrayList<PowerUps>();
-		this.spawnEnemies();
+
+		this.players = new ArrayList<XWing>();
+		this.spawnPlayers();
+		//this.spawnEnemies();
+
 		this.handleKeyPressEvent();
 	}
 
@@ -69,6 +74,8 @@ public class GameTimer extends AnimationTimer{
 			}
 		}
 
+
+
 //		System.out.println((int)time); //practice checker
 
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
@@ -77,13 +84,16 @@ public class GameTimer extends AnimationTimer{
 
 		this.xwing.move();
 		this.moveBullets();
-		this.moveEnemies();
+		//this.moveEnemies();
+		this.moveAi();
 		this.checkPowerUpsCollision();
+		this.checkPlayerCollision();
 
 		this.xwing.render(this.gc);
-		this.renderEnemies();
+		//this.renderEnemies();
 		this.renderBullets();
 		this.renderPowerUps();
+		this.renderPlayers();
 		this.gameCheck(time);
 		this.drawDetails(time);
 
@@ -136,6 +146,12 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+	private void renderPlayers() {
+		for(XWing p: this.players) {
+			p.render(this.gc);
+		}
+	}
+
 	private void spawnPowerUps() {
 		PowerUps newPowerUp;
 		Random r = new Random();
@@ -170,13 +186,34 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+	private void checkPlayerCollision() {
+		for(int i=0; i<this.players.size(); i++) {
+			XWing p = this.players.get(i);
+			if(p.isAvailable()) {
+				p.checkCollision(this.xwing, p);
+			}
+			else {
+				this.players.remove(i);
+			}
+		}
+	}
+
 	//method that will spawn/instantiate seven enemies at a random x,y location
-	private void spawnEnemies(){ //initial
+//	private void spawnEnemies(){ //initial
+//		Random r = new Random();
+//		for(int i=0;i<GameTimer.PLAYERS;i++){
+//			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
+//			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
+//			this.enemies.add(new Enemy(x, y, 0));
+//		}
+//	}
+
+	private void spawnPlayers(){ //initial
 		Random r = new Random();
-		for(int i=0;i<GameTimer.PLAYERS;i++){
+		for(int i=0;i<3;i++){
 			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
-			this.enemies.add(new Enemy(x, y, 0));
+			int y = r.nextInt(GameStage.WINDOW_HEIGHT-XWing.XWING_SIZE); //it won't succeed window height
+			this.players.add(new XWing("Hello", x, y));
 		}
 	}
 
@@ -213,18 +250,32 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	//method that will move the enemies
-	private void moveEnemies(){
+//	private void moveEnemies(){
+//		//Loop through the enemies arraylist
+//		for(int i = 0; i < this.enemies.size(); i++){
+//			Enemy e = this.enemies.get(i);
+//			if(e.isAlive()) {
+//				e.move();
+//				e.checkCollision(this.xwing, e.enemyType());
+//			} else {
+//				this.enemies.remove(i);
+//			}
+//		}
+//	}
+
+	private void moveAi(){
 		//Loop through the enemies arraylist
-		for(int i = 0; i < this.enemies.size(); i++){
-			Enemy e = this.enemies.get(i);
+		for(int i = 0; i < this.players.size(); i++){
+			XWing e = this.players.get(i);
 			if(e.isAlive()) {
-				e.move();
-				e.checkCollision(this.xwing, e.enemyType());
+				e.moveAi();
+				//e.checkCollision(this.xwing, e.enemyType());
 			} else {
-				this.enemies.remove(i);
+				this.players.remove(i);
 			}
 		}
 	}
+
 
 	//method that will listen and handle the key press events
 	private void handleKeyPressEvent() {
@@ -248,7 +299,6 @@ public class GameTimer extends AnimationTimer{
 		if(ke==KeyCode.UP){
 			this.xwing.setDY(-1*XWing.XWING_SPEED);
 			this.xwing.faceUp();
-
 		}
 
 		if(ke==KeyCode.LEFT){
