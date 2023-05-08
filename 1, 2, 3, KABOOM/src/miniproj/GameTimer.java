@@ -32,7 +32,7 @@ public class GameTimer extends AnimationTimer{
 	private int previousSecond = -1;
 	public static final double SPAWN_TIME = 5.0d;
 	public static final double EXPLOTION_TIME = 5.0d;
-	public static final double POWERUP_SPAWN_TIME = 10.0d;
+	public static final double POWERUP_SPAWN_TIME = 5.0d;
 	//public static final double BOSS_SPAWN_TIME = 30.0d;
 
 
@@ -67,11 +67,11 @@ public class GameTimer extends AnimationTimer{
 //			if((int)time == (int)GameTimer.BOSS_SPAWN_TIME) {
 //				this.spawnBossEnemy();
 //			}
-//			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
-//				this.spawnPowerUps();
-//			}
+			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
+				this.spawnPowerUps();
+			}
 //
-//			this.despawnPowerUps();
+			this.despawnPowerUps();
 
 //			if(this.xwing.isInvincible()) {
 //				this.xwing.setInvincibilityElapsed();
@@ -131,11 +131,11 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	//method that will render/draw the enemies to the canvas
-	private void renderEnemies() {
-		for (Enemy e : this.enemies){
-			e.render(this.gc);
-		}
-	}
+//	private void renderEnemies() {
+//		for (Enemy e : this.enemies){
+//			e.render(this.gc);
+//		}
+//	}
 
 	//method that will render/draw the bullets to the canvas
 	private void renderBullets() {
@@ -162,7 +162,8 @@ public class GameTimer extends AnimationTimer{
 		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT-PowerUps.POWERUP_HEIGHT); //it won't succeed window height
 
-		int type = r.nextInt(2);
+		//int type = r.nextInt(2);
+		int type = 0;
 
 		newPowerUp = type==0?new Orb(x, y):new RebelAlliance(x, y);
 
