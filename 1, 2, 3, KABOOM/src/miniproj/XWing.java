@@ -11,6 +11,7 @@ public class XWing extends Sprite{
 
 	private boolean invincibility;
 	private int invincibilityElapsed;
+	private int speedupElapsed;
 	private int invincibilityDuration;
 	private int type = 0; // 0 has a bomb; 1 no bomb
 
@@ -25,7 +26,7 @@ public class XWing extends Sprite{
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
 
-	public static final int XWING_SPEED = 3;
+	public static final int XWING_SPEED = 2;
 	public final static int XWING_SIZE = 50;
 
 	private int score = 0;
@@ -45,7 +46,7 @@ public class XWing extends Sprite{
 		//System.out.println("Strength: " + this.strength); //practice checker
 
 		// temp
-		this.speed = 2;
+		this.speed = XWING_SPEED;
 		this.moveRight = false;
 	}
 
@@ -75,12 +76,7 @@ public class XWing extends Sprite{
 	}
 
 
-	void makeInvincible(int invincibilityDuration) {
-		this.invincibility = true;
-		this.invincibilityElapsed = 0;
-		//this.setImage(XWING_INVINCIBLE_IMAGE);
-		this.invincibilityDuration = invincibilityDuration;
-	}
+
 
 	void faceRight() {
 		if(this.type == 0){
@@ -107,12 +103,29 @@ public class XWing extends Sprite{
 		}
 	}
 
+	void makeInvincible(int invincibilityDuration) {
+		this.invincibility = true;
+		this.invincibilityElapsed = 0;
+		//this.setImage(XWING_INVINCIBLE_IMAGE);
+		this.invincibilityDuration = invincibilityDuration;
+	}
+
 	void setInvincibilityElapsed() {
 		this.invincibilityElapsed += 1;
 		if(this.invincibilityElapsed == this.invincibilityDuration) {
 			this.invincibility = false;
 			this.setImage(PLAYER_RIGHT);
 		}
+	}
+
+	void increaseSpeed() { //collected an orb
+		this.speed+=10;
+//		this.speedupElapsed += 1;
+//		if(this.speedupElapsed == 6) {
+//			this.speed = XWING_SPEED;
+//			//this.setImage(PLAYER_RIGHT);
+//		}
+		System.out.println("Speed: " + this.speed);
 	}
 
 	void die(){
@@ -178,6 +191,8 @@ public class XWing extends Sprite{
 		this.strength+=50;
 		System.out.println("Strength: " + this.strength);
 	}
+
+
 
 	void setScore() {
 		this.score+=1;
