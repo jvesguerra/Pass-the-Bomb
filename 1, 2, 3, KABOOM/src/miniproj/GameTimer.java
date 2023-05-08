@@ -31,6 +31,7 @@ public class GameTimer extends AnimationTimer{
 
 	private int previousSecond = -1;
 	public static final double SPAWN_TIME = 5.0d;
+	public static final double EXPLOTION_TIME = 5.0d;
 	public static final double POWERUP_SPAWN_TIME = 10.0d;
 	//public static final double BOSS_SPAWN_TIME = 30.0d;
 
@@ -60,17 +61,17 @@ public class GameTimer extends AnimationTimer{
 		double time = (currentNanoTime - currentTime)/1000000000.0;
 
 		if(previousSecond != (int)time && (int)time != 0) {
-//			if((int)(time%GameTimer.SPAWN_TIME) == 0) {
-//				this.spawnNewEnemies();
-//			}
+			if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
+				this.removePlayer();
+			}
 //			if((int)time == (int)GameTimer.BOSS_SPAWN_TIME) {
 //				this.spawnBossEnemy();
 //			}
-			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
-				this.spawnPowerUps();
-			}
-
-			this.despawnPowerUps();
+//			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
+//				this.spawnPowerUps();
+//			}
+//
+//			this.despawnPowerUps();
 
 //			if(this.xwing.isInvincible()) {
 //				this.xwing.setInvincibilityElapsed();
@@ -217,6 +218,15 @@ public class GameTimer extends AnimationTimer{
 			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
 			int y = r.nextInt(GameStage.WINDOW_HEIGHT-XWing.XWING_SIZE); //it won't succeed window height
 			this.players.add(new XWing("Hello", x, y));
+		}
+	}
+
+	private void removePlayer(){ //initial
+		for(int i=0;i<this.players.size();i++){
+			XWing p = this.players.get(i);
+			if(p.getType() == 1) {
+				this.players.remove(p);
+			}
 		}
 	}
 
