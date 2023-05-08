@@ -74,24 +74,12 @@ public class XWing extends Sprite{
 		return this.strength;
 	}
 
+
 	void makeInvincible(int invincibilityDuration) {
 		this.invincibility = true;
 		this.invincibilityElapsed = 0;
-		this.setImage(XWING_INVINCIBLE_IMAGE);
+		//this.setImage(XWING_INVINCIBLE_IMAGE);
 		this.invincibilityDuration = invincibilityDuration;
-	}
-
-
-	void hasBomb() {
-		if(this.type == 1){
-			this.setImage(PLAYER_LEFT);
-			this.type = 0;
-
-		}else{
-			this.setImage(HAS_BOMB);
-			this.type = 1;
-		}
-
 	}
 
 	void faceRight() {
@@ -195,6 +183,19 @@ public class XWing extends Sprite{
 		this.score+=1;
 	}
 
+	// temp
+	void setType(int num) {
+		this.type = num;
+
+		if(this.type == 1){
+			this.setImage(HAS_BOMB);
+		}else{
+			this.setImage(PLAYER_LEFT);
+
+		}
+
+	}
+
 	public boolean isAvailable() {
 		return this.getVisible();
 	}
@@ -207,7 +208,18 @@ public class XWing extends Sprite{
 
 	void checkCollision(XWing xwing, XWing dest) {
 		if(this.collidesWith(xwing)) {
-			dest.hasBomb();
+			xwing.makeInvincible(5);
+			dest.makeInvincible(5);
+
+			if(xwing.getType() == 0){
+				xwing.setType(1);
+				dest.setType(0);
+			}else{
+				xwing.setType(0);
+				dest.setType(1);
+			}
+
+
 		}
 	}
 }
