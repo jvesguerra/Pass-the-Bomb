@@ -98,7 +98,7 @@ public class Enemy extends Sprite {
 				this.die();
 			}
 			xwing.decreaseStrength(type); //will decrease strength depending on the enemy (normal-0 or boss-1)
-			xwing.hasBomb();
+			//xwing.hasBomb();
 		}
 	}
 }

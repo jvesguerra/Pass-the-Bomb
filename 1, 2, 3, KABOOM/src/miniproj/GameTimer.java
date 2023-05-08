@@ -42,6 +42,7 @@ public class GameTimer extends AnimationTimer{
 		this.theScene = theScene;
 		this.gameStage = gameStage;
 		this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
+
 		this.enemies = new ArrayList<Enemy>();
 		this.powerups = new ArrayList<PowerUps>();
 
@@ -50,6 +51,8 @@ public class GameTimer extends AnimationTimer{
 		//this.spawnEnemies();
 
 		this.handleKeyPressEvent();
+
+		this.xwing.setType(1);
 	}
 
 	@Override
@@ -69,9 +72,9 @@ public class GameTimer extends AnimationTimer{
 
 			this.despawnPowerUps();
 
-			if(this.xwing.isInvincible()) {
-				this.xwing.setInvincibilityElapsed();
-			}
+//			if(this.xwing.isInvincible()) {
+//				this.xwing.setInvincibilityElapsed();
+//			}
 		}
 
 
