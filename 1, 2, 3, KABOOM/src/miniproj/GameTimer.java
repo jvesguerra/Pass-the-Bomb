@@ -63,6 +63,10 @@ public class GameTimer extends AnimationTimer{
 			if(this.xwing.isInvincible()) {
 				this.xwing.setInvincibilityElapsed();
 			}
+
+			if(this.xwing.isSpeed()) {
+				this.xwing.setSpeedElapsed();
+			}
 		}
 
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
