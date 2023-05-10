@@ -19,21 +19,15 @@ public class GameTimer extends AnimationTimer{
 	private Scene theScene;
 	private GameStage gameStage;
 	private XWing xwing;
-	private ArrayList<Enemy> enemies;
 	private ArrayList<PowerUps> powerups;
-
 	private ArrayList<XWing> players;
-
-	public static final int PLAYERS = 3; //also the initial enemies spawned
-	//public static final int NEW_SPAWN_ENEMIES = 3;
-
 	private double currentTime = System.nanoTime();
-
 	private int previousSecond = -1;
+
+	public static final int PLAYERS = 3;
 	public static final double SPAWN_TIME = 5.0d;
 	public static final double EXPLOTION_TIME = 5.0d;
 	public static final double POWERUP_SPAWN_TIME = 5.0d;
-	//public static final double BOSS_SPAWN_TIME = 30.0d;
 
 
 	public final Image bg = new Image("images/background.jpg",GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT,false,false);
@@ -43,16 +37,11 @@ public class GameTimer extends AnimationTimer{
 		this.theScene = theScene;
 		this.gameStage = gameStage;
 		this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
-
-		this.enemies = new ArrayList<Enemy>();
 		this.powerups = new ArrayList<PowerUps>();
-
 		this.players = new ArrayList<XWing>();
+
 		this.spawnPlayers();
-		//this.spawnEnemies();
-
 		this.handleKeyPressEvent();
-
 		this.xwing.setType(1);
 	}
 
@@ -64,37 +53,28 @@ public class GameTimer extends AnimationTimer{
 			if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
 				this.removePlayer();
 			}
-//			if((int)time == (int)GameTimer.BOSS_SPAWN_TIME) {
-//				this.spawnBossEnemy();
-//			}
+
 			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
 				this.spawnPowerUps();
 			}
 //
 			this.despawnPowerUps();
 
-//			if(this.xwing.isInvincible()) {
-//				this.xwing.setInvincibilityElapsed();
-//			}
+			if(this.xwing.isInvincible()) {
+				this.xwing.setInvincibilityElapsed();
+			}
 		}
 
-
-
-//		System.out.println((int)time); //practice checker
-
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
-
 		this.gc.drawImage(this.bg, 0, 0);
 
 		this.xwing.move();
-		this.moveBullets();
-		//this.moveEnemies();
 		this.moveAi();
+
 		this.checkPowerUpsCollision();
 		this.checkPlayerCollision();
 
 		this.xwing.render(this.gc);
-		//this.renderEnemies();
 		this.renderBullets();
 		this.renderPowerUps();
 		this.renderPlayers();
@@ -130,13 +110,6 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	//method that will render/draw the enemies to the canvas
-//	private void renderEnemies() {
-//		for (Enemy e : this.enemies){
-//			e.render(this.gc);
-//		}
-//	}
-
 	//method that will render/draw the bullets to the canvas
 	private void renderBullets() {
 		for(Bullet b : this.xwing.getBullets()) {
@@ -156,6 +129,15 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+	private void spawnPlayers(){ //initial
+		Random r = new Random();
+		for(int i=0;i<3;i++){
+			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
+			int y = r.nextInt(GameStage.WINDOW_HEIGHT-XWing.XWING_SIZE); //it won't succeed window height
+			this.players.add(new XWing("Hello", x, y));
+		}
+	}
+
 	private void spawnPowerUps() {
 		PowerUps newPowerUp;
 		Random r = new Random();
@@ -168,6 +150,15 @@ public class GameTimer extends AnimationTimer{
 		newPowerUp = type==0?new Orb(x, y):new RebelAlliance(x, y);
 
 		this.powerups.add(newPowerUp);
+	}
+
+	private void removePlayer(){ //initial
+		for(int i=0;i<this.players.size();i++){
+			XWing p = this.players.get(i);
+			if(p.getType() == 1) {
+				this.players.remove(p);
+			}
+		}
 	}
 
 	private void despawnPowerUps() {
@@ -202,80 +193,6 @@ public class GameTimer extends AnimationTimer{
 			}
 		}
 	}
-
-	//method that will spawn/instantiate seven enemies at a random x,y location
-//	private void spawnEnemies(){ //initial
-//		Random r = new Random();
-//		for(int i=0;i<GameTimer.PLAYERS;i++){
-//			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-//			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
-//			this.enemies.add(new Enemy(x, y, 0));
-//		}
-//	}
-
-	private void spawnPlayers(){ //initial
-		Random r = new Random();
-		for(int i=0;i<3;i++){
-			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-			int y = r.nextInt(GameStage.WINDOW_HEIGHT-XWing.XWING_SIZE); //it won't succeed window height
-			this.players.add(new XWing("Hello", x, y));
-		}
-	}
-
-	private void removePlayer(){ //initial
-		for(int i=0;i<this.players.size();i++){
-			XWing p = this.players.get(i);
-			if(p.getType() == 1) {
-				this.players.remove(p);
-			}
-		}
-	}
-
-//	private void spawnNewEnemies() { //add enemies at certain interval
-//		Random r = new Random();
-//		for(int i=0;i<GameTimer.NEW_SPAWN_ENEMIES;i++){
-//			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-//			int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.ENEMY_SIZE); //it won't succeed window height
-//			this.enemies.add(new Enemy(x, y, 0));
-//		}
-//	}
-
-//	private void spawnBossEnemy() { //add boss at 30 seconds
-//		Random r = new Random();
-//		int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-//		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Enemy.DEATHSTAR_SIZE); //it won't succeed window height
-//		this.enemies.add(new Enemy(x, y, 1));
-//	}
-
-	//method that will move the bullets shot by a ship
-	private void moveBullets(){
-		//create a local arraylist of Bullets for the bullets 'shot' by the ship
-		ArrayList<Bullet> bList = this.xwing.getBullets();
-
-		//Loop through the bullet list and check whether a bullet is still visible.
-		for(int i = 0; i < bList.size(); i++){
-			Bullet b = bList.get(i);
-			if(b.getVisible() == true) {
-				b.move();
-			} else {
-				bList.remove(i);
-			}
-		}
-	}
-
-	//method that will move the enemies
-//	private void moveEnemies(){
-//		//Loop through the enemies arraylist
-//		for(int i = 0; i < this.enemies.size(); i++){
-//			Enemy e = this.enemies.get(i);
-//			if(e.isAlive()) {
-//				e.move();
-//				e.checkCollision(this.xwing, e.enemyType());
-//			} else {
-//				this.enemies.remove(i);
-//			}
-//		}
-//	}
 
 	private void moveAi(){
 		//Loop through the enemies arraylist

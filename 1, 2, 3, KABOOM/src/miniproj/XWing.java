@@ -43,9 +43,7 @@ public class XWing extends Sprite{
 		this.alive = true;
 		this.invincibility = false;
 		this.bullets = new ArrayList<Bullet>();
-		//System.out.println("Strength: " + this.strength); //practice checker
 
-		// temp
 		this.speed = XWING_SPEED;
 		this.moveRight = false;
 	}
@@ -75,9 +73,6 @@ public class XWing extends Sprite{
 		return this.strength;
 	}
 
-
-
-
 	void faceRight() {
 		if(this.type == 0){
 			this.setImage(PLAYER_RIGHT);
@@ -106,7 +101,7 @@ public class XWing extends Sprite{
 	void makeInvincible(int invincibilityDuration) {
 		this.invincibility = true;
 		this.invincibilityElapsed = 0;
-		//this.setImage(XWING_INVINCIBLE_IMAGE);
+		this.setImage(XWING_INVINCIBLE_IMAGE);
 		this.invincibilityDuration = invincibilityDuration;
 	}
 
@@ -214,8 +209,6 @@ public class XWing extends Sprite{
 	public boolean isAvailable() {
 		return this.getVisible();
 	}
-
-	// Added
 
 	void despawn() {
 		this.setVisible(false);
