@@ -8,14 +8,19 @@ public class XWing extends Sprite{
 	private String name;
 	private int strength;
 	private boolean alive;
-
 	private boolean invincibility;
 	private int invincibilityElapsed;
-	private int speedupElapsed;
 	private int invincibilityDuration;
+	private boolean speedup;
+	private int speedupElapsed;
+	private int speedupDuration;
 	private int type = 0; // 0 has a bomb; 1 no bomb
+	private int score = 0;
+	private boolean moveRight;
+	private int speed;
 
 	private ArrayList<Bullet> bullets;
+
 	private final static Image PLAYER_RIGHT = new Image("images/move_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_LEFT = new Image("images/move_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_DOWN = new Image("images/move_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
@@ -25,15 +30,8 @@ public class XWing extends Sprite{
 
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
-
-	public static final int XWING_SPEED = 2;
+	public static final int XWING_SPEED = 3;
 	public final static int XWING_SIZE = 50;
-
-	private int score = 0;
-
-	// temp
-	private boolean moveRight;
-	private int speed;
 
 	public XWing(String name, int x, int y){
 		super(x,y,XWing.PLAYER_LEFT);
@@ -42,14 +40,19 @@ public class XWing extends Sprite{
 		this.strength = r.nextInt(51)+100; //strength starts from 100-150
 		this.alive = true;
 		this.invincibility = false;
-		this.bullets = new ArrayList<Bullet>();
+		this.speedup = false;
+		this.moveRight = false;
 
 		this.speed = XWING_SPEED;
-		this.moveRight = false;
+		this.bullets = new ArrayList<Bullet>();
 	}
 
 	public boolean isInvincible() {
 		return this.invincibility;
+	}
+
+	public boolean isSpeed() {
+		return this.speedup;
 	}
 
 	public boolean isAlive(){
@@ -73,11 +76,27 @@ public class XWing extends Sprite{
 		return this.strength;
 	}
 
+	void setScore() {
+		this.score+=1;
+	}
+
+	void setType(int num) {
+		this.type = num;
+		if(this.type == 1){
+			this.setImage(HAS_BOMB);
+		}else{
+			this.setImage(PLAYER_LEFT);
+		}
+	}
+
+	void die(){
+    	this.alive = false;
+    }
+
 	void faceRight() {
 		if(this.type == 0){
 			this.setImage(PLAYER_RIGHT);
 		}
-
 	}
 
 	void faceLeft() {
@@ -113,32 +132,23 @@ public class XWing extends Sprite{
 		}
 	}
 
-	void increaseSpeed() { //collected an orb
-		this.speed+=10;
-//		this.speedupElapsed += 1;
-//		if(this.speedupElapsed == 6) {
-//			this.speed = XWING_SPEED;
-//			//this.setImage(PLAYER_RIGHT);
-//		}
-		System.out.println("Speed: " + this.speed);
+	void addSpeed(int speedupDuration) {
+		this.speedup = true;
+		this.speed += 20;
+		System.out.println(this.speed);
+		this.speedupElapsed = 0;
+		this.setImage(XWING_INVINCIBLE_IMAGE);
+		this.speedupDuration = speedupDuration;
 	}
 
-	void die(){
-    	this.alive = false;
-    }
-
-	//method that will get the bullets 'shot' by the XWing
-	public ArrayList<Bullet> getBullets(){
-		return this.bullets;
+	void setSpeedElapsed() {
+		this.speedupElapsed += 1;
+		if(this.speedupElapsed == this.speedupDuration) {
+			this.speedup = false;
+			this.setImage(PLAYER_RIGHT);
+		}
 	}
 
-	//method called if spacebar is pressed
-	public void shoot(){
-		//compute for the x and y initial position of the bullet
-		int x = (int) (this.x + this.width+20);
-		int y = (int) (this.y + this.height/2);
-		this.bullets.add(new Bullet(x, y));
-    }
 
 	//method called if up/down/left/right arrow key is pressed.
 	public void move() {
@@ -146,64 +156,6 @@ public class XWing extends Sprite{
 			this.x += this.dx;
 			this.y += this.dy;
 		}
-	}
-
-	// ai move
-	//method that changes the x position of the enemy
-	void moveAi(){
-		if(this.moveRight == true && this.x <= GameStage.WINDOW_WIDTH-this.width) { //continue moving to the right
-			this.x += this.speed;
-		} else if(this.moveRight == true && this.x >= GameStage.WINDOW_WIDTH-this.width) { //will move to the left (since it moves to right and reached the window width)
-			this.moveRight = !this.moveRight;
-			if(this.type==0) this.setImage(PLAYER_LEFT);
-		} else if(this.moveRight == false && this.x >= 0){ //continue moving to the left
-			this.x -= this.speed;
-		} else {
-			this.moveRight = !this.moveRight; //will move to the right (since it moves to left and reached the window width)
-			if(this.type==0) this.setImage(PLAYER_RIGHT);
-		}
-	}
-
-	void decreaseStrength(int type) { //hit
-		if(type == 0) { //normal enemy hit the XWing
-			this.strength-=30;
-		} else { //boss enemy hit the XWing
-			this.strength-=50;
-			this.makeInvincible(1);
-		}
-
-		//strength printer
-		if(this.getStrength() <= 0) {
-			System.out.println("Strength: 0");
-			this.die();
-		} else {
-			System.out.println("Strength: " + this.strength);
-		}
-
-	}
-
-	void increaseStrength() { //collected an orb
-		this.strength+=50;
-		System.out.println("Strength: " + this.strength);
-	}
-
-
-
-	void setScore() {
-		this.score+=1;
-	}
-
-	// temp
-	void setType(int num) {
-		this.type = num;
-
-		if(this.type == 1){
-			this.setImage(HAS_BOMB);
-		}else{
-			this.setImage(PLAYER_LEFT);
-
-		}
-
 	}
 
 	public boolean isAvailable() {
@@ -229,5 +181,56 @@ public class XWing extends Sprite{
 
 
 		}
+	}
+
+	//method that makes ai move
+	void moveAi(){
+		if(this.moveRight == true && this.x <= GameStage.WINDOW_WIDTH-this.width) { //continue moving to the right
+			this.x += this.speed;
+		} else if(this.moveRight == true && this.x >= GameStage.WINDOW_WIDTH-this.width) { //will move to the left (since it moves to right and reached the window width)
+			this.moveRight = !this.moveRight;
+			if(this.type==0) this.setImage(PLAYER_LEFT);
+		} else if(this.moveRight == false && this.x >= 0){ //continue moving to the left
+			this.x -= this.speed;
+		} else {
+			this.moveRight = !this.moveRight; //will move to the right (since it moves to left and reached the window width)
+			if(this.type==0) this.setImage(PLAYER_RIGHT);
+		}
+	}
+
+	//method that will get the bullets 'shot' by the XWing
+	public ArrayList<Bullet> getBullets(){
+		return this.bullets;
+	}
+
+	//method called if spacebar is pressed
+	public void shoot(){
+		//compute for the x and y initial position of the bullet
+		int x = (int) (this.x + this.width+20);
+		int y = (int) (this.y + this.height/2);
+		this.bullets.add(new Bullet(x, y));
+    }
+
+	void decreaseStrength(int type) { //hit
+		if(type == 0) { //normal enemy hit the XWing
+			this.strength-=30;
+		} else { //boss enemy hit the XWing
+			this.strength-=50;
+			this.makeInvincible(1);
+		}
+
+		//strength printer
+		if(this.getStrength() <= 0) {
+			System.out.println("Strength: 0");
+			this.die();
+		} else {
+			System.out.println("Strength: " + this.strength);
+		}
+
+	}
+
+	void increaseStrength() { //collected an orb
+		this.strength+=50;
+		System.out.println("Strength: " + this.strength);
 	}
 }
