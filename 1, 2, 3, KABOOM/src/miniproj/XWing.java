@@ -17,7 +17,6 @@ public class XWing extends Sprite{
 	private int type = 0; // 0 has a bomb; 1 no bomb
 	private int score = 0;
 	private boolean moveRight;
-	private int speed;
 
 	private ArrayList<Bullet> bullets;
 
@@ -30,8 +29,12 @@ public class XWing extends Sprite{
 
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
-	public static final int XWING_SPEED = 3;
+	public final static int speed = 3;
 	public final static int XWING_SIZE = 50;
+	public final static int SPEED_INT = 5;
+
+	public static int XWING_SPEED = 3;
+
 
 	public XWing(String name, int x, int y){
 		super(x,y,XWing.PLAYER_LEFT);
@@ -43,7 +46,6 @@ public class XWing extends Sprite{
 		this.speedup = false;
 		this.moveRight = false;
 
-		this.speed = XWING_SPEED;
 		this.bullets = new ArrayList<Bullet>();
 	}
 
@@ -134,8 +136,7 @@ public class XWing extends Sprite{
 
 	void addSpeed(int speedupDuration) {
 		this.speedup = true;
-		this.speed += 20;
-		System.out.println(this.speed);
+		XWing.XWING_SPEED += SPEED_INT;
 		this.speedupElapsed = 0;
 		this.setImage(XWING_INVINCIBLE_IMAGE);
 		this.speedupDuration = speedupDuration;
@@ -145,6 +146,7 @@ public class XWing extends Sprite{
 		this.speedupElapsed += 1;
 		if(this.speedupElapsed == this.speedupDuration) {
 			this.speedup = false;
+			XWing.XWING_SPEED -= SPEED_INT;
 			this.setImage(PLAYER_RIGHT);
 		}
 	}
@@ -186,12 +188,12 @@ public class XWing extends Sprite{
 	//method that makes ai move
 	void moveAi(){
 		if(this.moveRight == true && this.x <= GameStage.WINDOW_WIDTH-this.width) { //continue moving to the right
-			this.x += this.speed;
+			this.x += XWing.speed;
 		} else if(this.moveRight == true && this.x >= GameStage.WINDOW_WIDTH-this.width) { //will move to the left (since it moves to right and reached the window width)
 			this.moveRight = !this.moveRight;
 			if(this.type==0) this.setImage(PLAYER_LEFT);
 		} else if(this.moveRight == false && this.x >= 0){ //continue moving to the left
-			this.x -= this.speed;
+			this.x -= XWing.speed;
 		} else {
 			this.moveRight = !this.moveRight; //will move to the right (since it moves to left and reached the window width)
 			if(this.type==0) this.setImage(PLAYER_RIGHT);
