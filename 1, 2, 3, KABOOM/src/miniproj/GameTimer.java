@@ -20,6 +20,7 @@ public class GameTimer extends AnimationTimer{
 	private GameStage gameStage;
 	private XWing xwing;
 	private ArrayList<PowerUps> powerups;
+	private ArrayList<Obstacles> obstacles;
 	private ArrayList<XWing> players;
 	private double currentTime = System.nanoTime();
 	private int previousSecond = -1;
@@ -38,6 +39,7 @@ public class GameTimer extends AnimationTimer{
 		this.gameStage = gameStage;
 		this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
 		this.powerups = new ArrayList<PowerUps>();
+		this.obstacles = new ArrayList<Obstacles>();
 		this.players = new ArrayList<XWing>();
 
 		this.spawnPlayers();
@@ -55,17 +57,23 @@ public class GameTimer extends AnimationTimer{
 			}
 
 			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
-				this.spawnPowerUps();
+				//this.spawnPowerUps();
+				this.spawnObstacles();
 			}
 //
 			this.despawnPowerUps();
+			this.despawnObstacles();
 
 			if(this.xwing.isInvincible()) {
 				this.xwing.setInvincibilityElapsed();
 			}
 
-			if(this.xwing.isSpeed()) {
-				this.xwing.setSpeedElapsed();
+			if(this.xwing.isSpeedUp()) {
+				this.xwing.setSpeedUpElapsed();
+			}
+
+			if(this.xwing.isSpeedDown()) {
+				this.xwing.setSpeedDownElapsed();
 			}
 		}
 
@@ -77,11 +85,13 @@ public class GameTimer extends AnimationTimer{
 
 		this.checkPowerUpsCollision();
 		this.checkPlayerCollision();
+		this.checkObstaclesCollision();
 
 		this.xwing.render(this.gc);
 		this.renderBullets();
 		this.renderPowerUps();
 		this.renderPlayers();
+		this.renderObstacles();
 		this.gameCheck(time);
 		this.drawDetails(time);
 
@@ -127,6 +137,12 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+	private void renderObstacles() {
+		for(Obstacles p: this.obstacles) {
+			p.render(this.gc);
+		}
+	}
+
 	private void renderPlayers() {
 		for(XWing p: this.players) {
 			p.render(this.gc);
@@ -148,12 +164,26 @@ public class GameTimer extends AnimationTimer{
 		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT-PowerUps.POWERUP_HEIGHT); //it won't succeed window height
 
-		//int type = r.nextInt(2);
-		int type = 0;
+		int type = r.nextInt(2);
+		//int type = 0;
 
 		newPowerUp = type==0?new Orb(x, y):new RebelAlliance(x, y);
 
 		this.powerups.add(newPowerUp);
+	}
+
+	private void spawnObstacles() {
+		Obstacles newObstacle;
+		Random r = new Random();
+		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
+		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Obstacles.OBSTACLE_HEIGHT); //it won't succeed window height
+
+		//int type = r.nextInt(2);
+		//int type = 0;
+
+		newObstacle = new Slow(x, y);
+
+		this.obstacles.add(newObstacle);
 	}
 
 	private void removePlayer(){ //initial
@@ -175,6 +205,16 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+	private void despawnObstacles() {
+		for(int i=0; i<this.obstacles.size(); i++) {
+			Obstacles p = this.obstacles.get(i);
+			p.setAvailabilityTimeElapsed();
+			if(!p.isAvailable()) {
+				this.obstacles.remove(i);
+			}
+		}
+	}
+
 	private void checkPowerUpsCollision() {
 		for(int i=0; i<this.powerups.size(); i++) {
 			PowerUps p = this.powerups.get(i);
@@ -182,6 +222,17 @@ public class GameTimer extends AnimationTimer{
 				p.checkCollision(this.xwing);
 			}else {
 				this.powerups.remove(i);
+			}
+		}
+	}
+
+	private void checkObstaclesCollision() {
+		for(int i=0; i<this.obstacles.size(); i++) {
+			Obstacles p = this.obstacles.get(i);
+			if(p.isAvailable()) {
+				p.checkCollision(this.xwing);
+			}else {
+				this.obstacles.remove(i);
 			}
 		}
 	}
