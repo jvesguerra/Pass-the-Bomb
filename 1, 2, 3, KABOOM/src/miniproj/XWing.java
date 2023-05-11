@@ -22,6 +22,9 @@ public class XWing extends Sprite{
 	private int speedDownElapsed;
 	private int speedDownDuration;
 	private boolean speedDown;
+	private boolean stun;
+	private int stunElapsed;
+	private int stunDuration;
 
 	private final static Image PLAYER_RIGHT = new Image("images/move_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_LEFT = new Image("images/move_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
@@ -47,6 +50,8 @@ public class XWing extends Sprite{
 		this.alive = true;
 		this.invincibility = false;
 		this.speedup = false;
+		this.speedDown = false;
+		this.stun = false;
 		this.moveRight = false;
 
 		this.bullets = new ArrayList<Bullet>();
@@ -62,6 +67,10 @@ public class XWing extends Sprite{
 
 	public boolean isSpeedDown() {
 		return this.speedDown;
+	}
+
+	public boolean isStun() {
+		return this.stun;
 	}
 
 	public boolean isAlive(){
@@ -141,6 +150,7 @@ public class XWing extends Sprite{
 		}
 	}
 
+	// SPEED UP
 	void addSpeed(int speedupDuration) {
 		this.speedup = true;
 		XWing.XWING_SPEED += SPEED_INT;
@@ -158,6 +168,7 @@ public class XWing extends Sprite{
 		}
 	}
 
+	// SLOW DOWN
 	void decreaseSpeed(int speedDownDuration) {
 		this.speedDown = true;
 		XWing.XWING_SPEED -= 2;
@@ -175,6 +186,23 @@ public class XWing extends Sprite{
 		}
 	}
 
+	// STUN
+	void stun(int stunDuration) {
+		this.stun = true;
+		XWing.XWING_SPEED -= 3;
+		this.stunElapsed = 0;
+		this.setImage(XWING_INVINCIBLE_IMAGE);
+		this.stunDuration = stunDuration;
+	}
+
+	void setStunElapsed() {
+		this.stunElapsed += 1;
+		if(this.stunElapsed == this.stunDuration) {
+			this.stun = false;
+			XWing.XWING_SPEED += 3;
+			this.setImage(PLAYER_RIGHT);
+		}
+	}
 
 	//method called if up/down/left/right arrow key is pressed.
 	public void move() {

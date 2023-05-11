@@ -75,6 +75,10 @@ public class GameTimer extends AnimationTimer{
 			if(this.xwing.isSpeedDown()) {
 				this.xwing.setSpeedDownElapsed();
 			}
+
+			if(this.xwing.isStun()) {
+				this.xwing.setStunElapsed();
+			}
 		}
 
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
@@ -178,10 +182,10 @@ public class GameTimer extends AnimationTimer{
 		int x = r.nextInt(GameStage.WINDOW_WIDTH/2); //location is at lesser half of screen
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Obstacles.OBSTACLE_HEIGHT); //it won't succeed window height
 
-		//int type = r.nextInt(2);
-		//int type = 0;
+		int type = r.nextInt(2);
+		//int type = 1;
 
-		newObstacle = new Slow(x, y);
+		newObstacle = type==0?new Slow(x, y):new Stun(x, y);
 
 		this.obstacles.add(newObstacle);
 	}
