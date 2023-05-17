@@ -200,6 +200,7 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+
 	private void assignRandomBomb(){ //initial
 		Random r = new Random();
 		int i = r.nextInt(this.players.size());
