@@ -14,11 +14,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.*;
+import java.net.*;
+
 public class Menu {
 	public static final String NEW_GAME = "New Game";
 	public static final String HOW_TO_PLAY = "How to Play";
 	public static final String ABOUT = "About";
 	public static final String BACK = "Back";
+
+	private Socket socket;
+	private int playerID;
 
 	private Scene splashScene;
 	private Stage stage;
@@ -32,6 +38,22 @@ public class Menu {
 		this.root.getChildren().add(this.canvas);
 	}
 
+	// connect to server
+	private void connectToServer(){
+		try{
+			socket = new Socket("localhost",12345);
+			DataInputStream in = new DataInputStream(socket.getInputStream());
+			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+			playerID = in.readInt();
+			System.out.println("You are player#"+playerID);
+			if(playerID == 1){
+				System.out.println("Waiting for Player #2 to connect");
+			}
+		}catch(IOException ex){
+			System.out.println("IOException from connectToServer()");
+		}
+	}
+
 	public void setStage(Stage stage) {
 		this.stage = stage;
 		stage.setTitle("Star Wars Shooting Game");
@@ -40,6 +62,7 @@ public class Menu {
 		stage.setScene(this.splashScene);
 		stage.setResizable(false);
 		stage.show();
+		this.connectToServer();
 	}
 
 	private void initSplash(Stage stage) {

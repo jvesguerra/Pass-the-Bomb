@@ -14,5 +14,4 @@ public class Main extends Application {
 		Menu menu = new Menu();
 		menu.setStage(stage);
 	}
-
 }
