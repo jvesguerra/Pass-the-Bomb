@@ -22,13 +22,13 @@ public class GameStage {
 	private GameTimer gametimer;
 
 	//the class constructor
-	public GameStage() {
+	public GameStage(int playerID) {
 		this.root = new Group();
 		this.scene = new Scene(root, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT,Color.WHITE);
 		this.canvas = new Canvas(GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
 		this.gc = canvas.getGraphicsContext2D();
 		//instantiate an animation timer
-		this.gametimer = new GameTimer(this.gc,this.scene,this);
+		this.gametimer = new GameTimer(this.gc,this.scene,this,playerID);
 	}
 
 	//method to add the stage elements

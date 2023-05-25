@@ -62,7 +62,7 @@ public class Menu {
 		stage.setScene(this.splashScene);
 		stage.setResizable(false);
 		stage.show();
-		this.connectToServer();
+		
 	}
 
 	private void initSplash(Stage stage) {
@@ -116,8 +116,12 @@ public class Menu {
 
 		switch(screen) {
 			case 1: //start with the game
+				//wait for other players after starting
+				// check for number of players before proceeding to game stage
+				// pass player id in game stage
+				this.connectToServer();
 				System.out.println(Menu.NEW_GAME);
-				GameStage gameStage = new GameStage();
+				GameStage gameStage = new GameStage(this.playerID);
 				gameStage.setStage(stage);
 				break;
 			case 2: //go to how to play screen
