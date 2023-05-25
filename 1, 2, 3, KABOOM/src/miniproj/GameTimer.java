@@ -19,11 +19,13 @@ public class GameTimer extends AnimationTimer{
 	private Scene theScene;
 	private GameStage gameStage;
 	private XWing xwing;
+	private XWing player2;
 	private ArrayList<PowerUps> powerups;
 	private ArrayList<Obstacles> obstacles;
 	private ArrayList<XWing> players;
 	private double currentTime = System.nanoTime();
 	private int previousSecond = -1;
+	private int playerID = 0;
 
 	public static final int PLAYERS = 3;
 	public static final double SPAWN_TIME = 5.0d;
@@ -33,18 +35,36 @@ public class GameTimer extends AnimationTimer{
 
 	public final Image bg = new Image("images/background.jpg",GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT,false,false);
 
-	GameTimer(GraphicsContext gc, Scene theScene, GameStage gameStage){
+	GameTimer(GraphicsContext gc, Scene theScene, GameStage gameStage, int playerID){
 		this.gc = gc;
 		this.theScene = theScene;
 		this.gameStage = gameStage;
-		this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
 		this.powerups = new ArrayList<PowerUps>();
 		this.obstacles = new ArrayList<Obstacles>();
 		this.players = new ArrayList<XWing>();
+		this.playerID = playerID;
 
 		this.spawnPlayers();
 		this.handleKeyPressEvent();
-		this.xwing.setType(1);
+
+		// this.xwing = new XWing("XWing "+playerID,XWing.XWING_X_POS,XWing.XWING_Y_POS);
+		// this.xwing.setType(1);
+
+		// initialize xwing
+		if(playerID == 1){
+			this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
+			this.player2 = new XWing("Player 2",120,270);
+
+			this.xwing.setType(1);
+			this.player2.setType(0);
+		} else if (playerID == 2){
+			this.player2 = new XWing("Player 2",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
+			this.xwing = new XWing("XWing",120,270);
+
+			this.xwing.setType(1);
+			this.player2.setType(0);
+		}
+		System.out.println(playerID);
 	}
 
 	@Override
@@ -65,33 +85,33 @@ public class GameTimer extends AnimationTimer{
 			this.despawnPowerUps();
 			this.despawnObstacles();
 
-			if(this.xwing.isInvincible()) {
-				this.xwing.setInvincibilityElapsed();
-			}
+			// if(this.xwing.isInvincible()) {
+			// 	this.xwing.setInvincibilityElapsed();
+			// }
 
-			if(this.xwing.isSpeedUp()) {
-				this.xwing.setSpeedUpElapsed();
-			}
+			// if(this.xwing.isSpeedUp()) {
+			// 	this.xwing.setSpeedUpElapsed();
+			// }
 
-			if(this.xwing.isSpeedDown()) {
-				this.xwing.setSpeedDownElapsed();
-			}
+			// if(this.xwing.isSpeedDown()) {
+			// 	this.xwing.setSpeedDownElapsed();
+			// }
 
-			if(this.xwing.isStun()) {
-				this.xwing.setStunElapsed();
-			}
+			// if(this.xwing.isStun()) {
+			// 	this.xwing.setStunElapsed();
+			// }
 		}
 
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
 		this.gc.drawImage(this.bg, 0, 0);
 
-		this.xwing.move();
 		this.moveAi();
 
 		this.checkPowerUpsCollision();
 		this.checkPlayerCollision();
 		this.checkObstaclesCollision();
 
+		//render xwing
 		this.xwing.render(this.gc);
 		this.renderBullets();
 		this.renderPowerUps();
@@ -100,10 +120,20 @@ public class GameTimer extends AnimationTimer{
 		this.gameCheck(time);
 		this.drawDetails(time);
 
+		this.xwing.move();
+
 		if(this.previousSecond != (int)time) {
 			this.previousSecond = (int)time;
 		}
 	}
+
+	//method that will render/draw the xwing to the canvas
+	// private void renderXwing() {
+	// 	if(playerID == 1){
+	// 		this.xwing = new XWing("XWing "+playerID,XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
+			
+	// 	}
+	// }
 
 	private void drawDetails(double t) {
 		int time = (int) t; //typecasting a double to int
@@ -316,9 +346,9 @@ public class GameTimer extends AnimationTimer{
 			this.xwing.faceRight();
 		}
 
-		if(ke==KeyCode.SPACE){
-			this.xwing.shoot();
-		}
+		// if(ke==KeyCode.SPACE){
+		// 	this.xwing.shoot();
+		// }
 
 		System.out.println(ke+" key pressed.");
    	}
