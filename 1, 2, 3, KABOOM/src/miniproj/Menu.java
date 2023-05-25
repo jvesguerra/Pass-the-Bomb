@@ -62,7 +62,6 @@ public class Menu {
 		stage.setScene(this.splashScene);
 		stage.setResizable(false);
 		stage.show();
-		
 	}
 
 	private void initSplash(Stage stage) {

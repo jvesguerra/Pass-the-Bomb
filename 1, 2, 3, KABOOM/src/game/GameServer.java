@@ -34,7 +34,9 @@ public class GameServer {
                 System.out.println("Player #" + numPlayers + " has connected.");
             }
 
+
             System.out.println("No longer accepting responses");
+
         }catch(IOException ex){
             System.out.println("IOException from acceptConnections()");
         }
