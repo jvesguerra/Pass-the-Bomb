@@ -1,5 +1,9 @@
 package miniproj;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
@@ -32,38 +36,41 @@ public class GameTimer extends AnimationTimer{
 	public static final double EXPLOTION_TIME = 5.0d;
 	public static final double POWERUP_SPAWN_TIME = 5.0d;
 
+	// NETWORK
+	private ReadFromServer rfsRunnable;
+	private WriteToServer wtsRunnable;
+	private Socket socket;
+
 
 	public final Image bg = new Image("images/background.jpg",GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT,false,false);
 
-	GameTimer(GraphicsContext gc, Scene theScene, GameStage gameStage, int playerID){
+	//GameTimer(GraphicsContext gc, Scene theScene, GameStage gameStage, int playerID){
+	GameTimer(GraphicsContext gc, Scene theScene, GameStage gameStage){
 		this.gc = gc;
 		this.theScene = theScene;
 		this.gameStage = gameStage;
 		this.powerups = new ArrayList<PowerUps>();
 		this.obstacles = new ArrayList<Obstacles>();
 		this.players = new ArrayList<XWing>();
-		this.playerID = playerID;
-
-		this.spawnPlayers();
 		this.handleKeyPressEvent();
 
-		// this.xwing = new XWing("XWing "+playerID,XWing.XWING_X_POS,XWing.XWING_Y_POS);
-		// this.xwing.setType(1);
-
+		this.connectToServer();
 		// initialize xwing
 		if(playerID == 1){
-			this.xwing = new XWing("XWing",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
-			this.player2 = new XWing("Player 2",120,270);
+			this.xwing = new XWing("XWing",100,250); //initial position is at x=100, y=250
+			this.player2 = new XWing("Player 2",200,500);
 
 			this.xwing.setType(1);
 			this.player2.setType(0);
 		} else if (playerID == 2){
-			this.player2 = new XWing("Player 2",XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
-			this.xwing = new XWing("XWing",120,270);
+			System.out.println("Test");
+			this.player2 = new XWing("Player 2",100,250); //initial position is at x=100, y=250
+			this.xwing = new XWing("XWing",200,500);
 
-			this.xwing.setType(1);
-			this.player2.setType(0);
+			this.xwing.setType(0);
+			this.player2.setType(1);
 		}
+		// add players to players array list to remove them
 		System.out.println(playerID);
 	}
 
@@ -72,18 +79,17 @@ public class GameTimer extends AnimationTimer{
 		double time = (currentNanoTime - currentTime)/1000000000.0;
 
 		if(previousSecond != (int)time && (int)time != 0) {
-			if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
-				this.removePlayer();
-				this.assignRandomBomb();
-			}
+			// if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
+			// 	this.removePlayer();
+			// 	this.assignRandomBomb();
+			// }
 
-			if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
-				//this.spawnPowerUps();
-				this.spawnObstacles();
-			}
-//
-			this.despawnPowerUps();
-			this.despawnObstacles();
+			// if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
+			// 	//this.spawnPowerUps();
+			// 	this.spawnObstacles();
+			// }
+			// this.despawnPowerUps();
+			// this.despawnObstacles();
 
 			// if(this.xwing.isInvincible()) {
 			// 	this.xwing.setInvincibilityElapsed();
@@ -105,17 +111,14 @@ public class GameTimer extends AnimationTimer{
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
 		this.gc.drawImage(this.bg, 0, 0);
 
-		this.moveAi();
-
 		this.checkPowerUpsCollision();
 		this.checkPlayerCollision();
 		this.checkObstaclesCollision();
 
-		//render xwing
 		this.xwing.render(this.gc);
-		this.renderBullets();
+		this.player2.render(this.gc);
+
 		this.renderPowerUps();
-		this.renderPlayers();
 		this.renderObstacles();
 		this.gameCheck(time);
 		this.drawDetails(time);
@@ -127,13 +130,71 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	//method that will render/draw the xwing to the canvas
-	// private void renderXwing() {
-	// 	if(playerID == 1){
-	// 		this.xwing = new XWing("XWing "+playerID,XWing.XWING_X_POS,XWing.XWING_Y_POS); //initial position is at x=100, y=250
-			
-	// 	}
-	// }
+	// NETWORKING	
+	// connect to server
+	private void connectToServer(){
+		try{
+			socket = new Socket("localhost",12345);
+			DataInputStream in = new DataInputStream(socket.getInputStream());
+			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+			playerID = in.readInt();
+			System.out.println("You are player#"+playerID);
+			if(playerID == 1){
+				System.out.println("Waiting for Player #2 to connect");
+			}
+
+			rfsRunnable = new ReadFromServer(in);
+			wtsRunnable = new WriteToServer(out);
+		}catch(IOException ex){
+			System.out.println("IOException from connectToServer()");
+		}
+	}
+
+	private class ReadFromServer implements Runnable{
+		private DataInputStream dataIn;
+
+		public ReadFromServer(DataInputStream in){
+			dataIn = in;
+			System.out.println("RFS Runnable created");
+		}
+
+		public void run(){
+			try{
+                while(true){
+					player2.setDX(dataIn.readInt());
+					player2.setDY(dataIn.readInt());
+                }
+            }catch(IOException ex){
+                System.out.println("IOException from RFS run()");
+            }
+		}
+	}
+
+	private class WriteToServer implements Runnable{
+		private DataOutputStream dataOut;
+
+		public WriteToServer(DataOutputStream out){
+			dataOut = out;
+			System.out.println("WTS Runnable created");
+		}
+
+		public void run(){
+			try{
+				while(true){	// sends coordinates
+					dataOut.writeInt(xwing.getX());
+					dataOut.writeInt(xwing.getY());
+					dataOut.flush();
+					try{
+						Thread.sleep(25);
+					}catch(InterruptedException ex){
+						System.out.println("InterruptedException from WTS run()");
+					}
+				}
+			}catch(IOException ex){
+				System.out.print("IOException from WTS run()");
+			}
+		}
+	}
 
 	private void drawDetails(double t) {
 		int time = (int) t; //typecasting a double to int
@@ -159,13 +220,6 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	//method that will render/draw the bullets to the canvas
-	private void renderBullets() {
-		for(Bullet b : this.xwing.getBullets()) {
-			b.render(this.gc);
-		}
-	}
-
 	private void renderPowerUps() {
 		for(PowerUps p: this.powerups) {
 			p.render(this.gc);
@@ -178,21 +232,6 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	private void renderPlayers() {
-		for(XWing p: this.players) {
-			p.render(this.gc);
-		}
-	}
-
-	private void spawnPlayers(){ //initial
-		Random r = new Random();
-		for(int i=0;i<3;i++){
-			int x = r.nextInt(GameStage.WINDOW_WIDTH/2)+400; //location is at greater half of screen
-			int y = r.nextInt(GameStage.WINDOW_HEIGHT-XWing.XWING_SIZE); //it won't succeed window height
-			this.players.add(new XWing("Hello", x, y));
-		}
-	}
-
 	private void spawnPowerUps() {
 		PowerUps newPowerUp;
 		Random r = new Random();
@@ -200,7 +239,6 @@ public class GameTimer extends AnimationTimer{
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT-PowerUps.POWERUP_HEIGHT); //it won't succeed window height
 
 		int type = r.nextInt(2);
-		//int type = 0;
 
 		newPowerUp = type==0?new Orb(x, y):new RebelAlliance(x, y);
 
@@ -214,14 +252,13 @@ public class GameTimer extends AnimationTimer{
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT-Obstacles.OBSTACLE_HEIGHT); //it won't succeed window height
 
 		int type = r.nextInt(2);
-		//int type = 1;
 
 		newObstacle = type==0?new Slow(x, y):new Stun(x, y);
 
 		this.obstacles.add(newObstacle);
 	}
 
-	private void removePlayer(){ //initial
+	private void removePlayer(){
 		for(int i=0;i<this.players.size();i++){
 			XWing p = this.players.get(i);
 			if(p.getType() == 1) {
@@ -230,8 +267,7 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-
-	private void assignRandomBomb(){ //initial
+	private void assignRandomBomb(){
 		Random r = new Random();
 		int i = r.nextInt(this.players.size());
 		XWing p = this.players.get(i);
@@ -292,20 +328,6 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	private void moveAi(){
-		//Loop through the enemies arraylist
-		for(int i = 0; i < this.players.size(); i++){
-			XWing e = this.players.get(i);
-			if(e.isAlive()) {
-				e.moveAi();
-				//e.checkCollision(this.xwing, e.enemyType());
-			} else {
-				this.players.remove(i);
-			}
-		}
-	}
-
-
 	//method that will listen and handle the key press events
 	private void handleKeyPressEvent() {
 		this.theScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
@@ -346,11 +368,7 @@ public class GameTimer extends AnimationTimer{
 			this.xwing.faceRight();
 		}
 
-		// if(ke==KeyCode.SPACE){
-		// 	this.xwing.shoot();
-		// }
-
-		System.out.println(ke+" key pressed.");
+		//System.out.println(ke+" key pressed.");
    	}
 
 	//method that will stop the ship's movement; set the ship's DX and DY to 0
