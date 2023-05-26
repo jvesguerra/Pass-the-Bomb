@@ -6,12 +6,12 @@ import javafx.scene.image.Image;
 
 public class Sprite {
 	protected Image img;
-	protected int x, y, dx, dy;
+	protected double x, y, dx, dy;
 	protected boolean visible;
 	protected double width;
 	protected double height;
 
-	public Sprite(int xPos, int yPos, Image image){
+	public Sprite(double xPos, double yPos, Image image){
 		this.x = xPos;
 		this.y = yPos;
 		this.loadImage(image);
@@ -19,12 +19,20 @@ public class Sprite {
 	}
 
 	//getters
-	public int getX() {
+	public double getX() {
 		return this.x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return this.y;
+	}
+
+	public void setX(double n) {
+		x = n;
+	}
+
+	public void setY(double n) {
+		y = n;
 	}
 
 	public boolean getVisible(){
@@ -37,11 +45,11 @@ public class Sprite {
 	}
 
 	//setters
-	public void setDX(int dx){
+	public void setDX(double dx){
 		this.dx = dx;
 	}
 
-	public void setDY(int dy){
+	public void setDY(double dy){
 		this.dy = dy;
 	}
 
