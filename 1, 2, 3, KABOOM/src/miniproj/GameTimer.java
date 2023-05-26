@@ -145,6 +145,8 @@ public class GameTimer extends AnimationTimer{
 
 			rfsRunnable = new ReadFromServer(in);
 			wtsRunnable = new WriteToServer(out);
+
+			rfsRunnable.waitForStartMsg();
 		}catch(IOException ex){
 			System.out.println("IOException from connectToServer()");
 		}
@@ -167,6 +169,15 @@ public class GameTimer extends AnimationTimer{
             }catch(IOException ex){
                 System.out.println("IOException from RFS run()");
             }
+		}
+
+		public void waitForStartMsg(){
+			try{
+				String startMsg = dataIn.readUTF();
+				System.out.println("Message from server: " + startMsg);
+			}catch(IOException ex){
+				System.out.println("IOException from waitForStartMsg()");
+			}
 		}
 	}
 

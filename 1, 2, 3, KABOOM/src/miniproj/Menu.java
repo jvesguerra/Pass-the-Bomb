@@ -23,7 +23,6 @@ public class Menu {
 	public static final String ABOUT = "About";
 	public static final String BACK = "Back";
 
-	private Socket socket;
 	private int playerID;
 
 	private Scene splashScene;
@@ -36,22 +35,6 @@ public class Menu {
 		this.splashScene = new Scene(root, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT, Color.WHITE);
 		this.canvas = new Canvas(GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
 		this.root.getChildren().add(this.canvas);
-	}
-
-	// connect to server
-	private void connectToServer(){
-		try{
-			socket = new Socket("localhost",12345);
-			DataInputStream in = new DataInputStream(socket.getInputStream());
-			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-			playerID = in.readInt();
-			System.out.println("You are player#"+playerID);
-			if(playerID == 1){
-				System.out.println("Waiting for Player #2 to connect");
-			}
-		}catch(IOException ex){
-			System.out.println("IOException from connectToServer()");
-		}
 	}
 
 	public void setStage(Stage stage) {
@@ -114,13 +97,11 @@ public class Menu {
 		stage.setScene(this.splashScene);
 
 		switch(screen) {
-			case 1: //start with the game
-				//wait for other players after starting
-				// check for number of players before proceeding to game stage
-				// pass player id in game stage
-				this.connectToServer();
+			case 1:
+
+				//this.connectToServer();
 				System.out.println(Menu.NEW_GAME);
-				GameStage gameStage = new GameStage(this.playerID);
+				GameStage gameStage = new GameStage();
 				gameStage.setStage(stage);
 				break;
 			case 2: //go to how to play screen

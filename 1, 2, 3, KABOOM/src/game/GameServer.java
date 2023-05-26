@@ -58,6 +58,10 @@ public class GameServer {
                     p2Socket = s;
                     p2ReadRunnable = rfc;
                     p2WriteRunnable = wtc;
+
+                    // since this is the last player for now
+                    p1WriteRunnable.sendStartMsg();
+                    p2WriteRunnable.sendStartMsg();
                 }
             }
 
@@ -101,6 +105,14 @@ public class GameServer {
                 }
             }catch(IOException ex){
                 System.out.println("IOException from WTC run()");
+            }
+        }
+
+        public void sendStartMsg(){
+            try{
+                dataOut.writeUTF("We now havw 2 players. GO!");
+            }catch(IOException ex){
+                System.out.println("IOException from sendStartMsg()");
             }
         }
     }
