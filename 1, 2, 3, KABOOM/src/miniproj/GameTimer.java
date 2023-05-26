@@ -63,7 +63,6 @@ public class GameTimer extends AnimationTimer{
 			this.xwing.setType(1);
 			this.player2.setType(0);
 		} else if (playerID == 2){
-			System.out.println("Test");
 			this.player2 = new XWing("Player 2",100,250); //initial position is at x=100, y=250
 			this.xwing = new XWing("XWing",200,500);
 
@@ -163,8 +162,12 @@ public class GameTimer extends AnimationTimer{
 		public void run(){
 			try{
                 while(true){
-					player2.setDX(dataIn.readInt());
-					player2.setDY(dataIn.readInt());
+					double player2X = dataIn.readDouble();
+					double player2Y = dataIn.readDouble();
+					if(player2 != null){
+						player2.setX(player2X);
+						player2.setY(player2Y);
+					}
                 }
             }catch(IOException ex){
                 System.out.println("IOException from RFS run()");
@@ -175,6 +178,12 @@ public class GameTimer extends AnimationTimer{
 			try{
 				String startMsg = dataIn.readUTF();
 				System.out.println("Message from server: " + startMsg);
+
+				Thread readThread = new Thread(rfsRunnable);
+				Thread writeThread = new Thread(wtsRunnable);
+
+				readThread.start();
+				writeThread.start();
 			}catch(IOException ex){
 				System.out.println("IOException from waitForStartMsg()");
 			}
@@ -192,9 +201,11 @@ public class GameTimer extends AnimationTimer{
 		public void run(){
 			try{
 				while(true){	// sends coordinates
-					dataOut.writeInt(xwing.getX());
-					dataOut.writeInt(xwing.getY());
-					dataOut.flush();
+					if(xwing != null){
+						dataOut.writeDouble(xwing.getX());
+						dataOut.writeDouble(xwing.getY());
+						dataOut.flush();
+					}
 					try{
 						Thread.sleep(25);
 					}catch(InterruptedException ex){

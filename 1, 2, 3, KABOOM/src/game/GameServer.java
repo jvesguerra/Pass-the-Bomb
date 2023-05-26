@@ -15,7 +15,7 @@ public class GameServer {
     private WriteToClient p1WriteRunnable;
     private WriteToClient p2WriteRunnable;
 
-    private int p1x, p1y, p2x, p2y;
+    private double p1x, p1y, p2x, p2y;
 
     public GameServer(){
         System.out.println("===== GAME SERVER =====");
@@ -54,14 +54,27 @@ public class GameServer {
                     p1Socket = s;
                     p1ReadRunnable = rfc;
                     p1WriteRunnable = wtc;
-                }else if(numPlayers==2){
+                }else{
                     p2Socket = s;
                     p2ReadRunnable = rfc;
                     p2WriteRunnable = wtc;
 
                     // since this is the last player for now
+                    // sync when the game starts
                     p1WriteRunnable.sendStartMsg();
                     p2WriteRunnable.sendStartMsg();
+
+                    Thread readThread1 = new Thread(p1ReadRunnable);
+                    Thread readThread2 = new Thread(p2ReadRunnable);
+
+                    readThread1.start();
+                    readThread2.start();
+
+                    Thread writeThread1 = new Thread(p1WriteRunnable);
+                    Thread writeThread2 = new Thread(p2WriteRunnable);
+
+                    writeThread1.start();
+                    writeThread2.start();
                 }
             }
 
@@ -87,13 +100,13 @@ public class GameServer {
             try{
                 while(true){
                     if(playerID == 1){
-                        dataOut.writeInt(p2x);
-                        dataOut.writeInt(p2y);
+                        dataOut.writeDouble(p2x);
+                        dataOut.writeDouble(p2y);
                         dataOut.flush();
                     }
-                    if(playerID == 2){
-                        dataOut.writeInt(p1x);
-                        dataOut.writeInt(p1y);
+                    else{
+                        dataOut.writeDouble(p1x);
+                        dataOut.writeDouble(p1y);
                         dataOut.flush();
                     }
 
@@ -131,12 +144,12 @@ public class GameServer {
             try{
                 while(true){
                     if(playerID == 1){
-                        p1x = dataIn.readInt();
-                        p1y = dataIn.readInt();
+                        p1x = dataIn.readDouble();
+                        p1y = dataIn.readDouble();
                     }
-                    if(playerID == 2){
-                        p2x = dataIn.readInt();
-                        p2y = dataIn.readInt();
+                    else{
+                        p2x = dataIn.readDouble();
+                        p2y = dataIn.readDouble();
                     }
                 }
             }catch(IOException ex){

@@ -35,11 +35,11 @@ public class XWing extends Sprite{
 
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
-	public final static int speed = 3;
+	public final static double speed = 3;
 	public final static int XWING_SIZE = 50;
-	public final static int SPEED_INT = 5;
+	public final static double SPEED_INT = 5;
 
-	public static int XWING_SPEED = 3;
+	public static double XWING_SPEED = 3;
 
 
 	public XWing(String name, int x, int y){
