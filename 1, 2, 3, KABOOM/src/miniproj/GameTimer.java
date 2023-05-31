@@ -69,6 +69,8 @@ public class GameTimer extends AnimationTimer{
 			this.xwing.setType(0);
 			this.player2.setType(1);
 		}
+		players.add(xwing);
+		players.add(player2);
 		// add players to players array list to remove them
 		System.out.println(playerID);
 	}
