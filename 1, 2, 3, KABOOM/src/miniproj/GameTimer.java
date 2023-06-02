@@ -24,6 +24,8 @@ public class GameTimer extends AnimationTimer{
 	private GameStage gameStage;
 	private XWing xwing;
 	private XWing player2;
+	private XWing player3;
+	private XWing player4;
 	private ArrayList<PowerUps> powerups;
 	private ArrayList<Obstacles> obstacles;
 	private ArrayList<XWing> players;
@@ -58,19 +60,53 @@ public class GameTimer extends AnimationTimer{
 		// initialize xwing
 		if(playerID == 1){
 			this.xwing = new XWing("XWing",100,250); //initial position is at x=100, y=250
-			this.player2 = new XWing("Player 2",200,500);
-
 			this.xwing.setType(1);
+
+			this.player2 = new XWing("Player 2",200,500);
+			this.player3 = new XWing("Player 3",200,250);
+			this.player4 = new XWing("Player 4",300,500);
+
 			this.player2.setType(0);
+			this.player3.setType(0);
 		} else if (playerID == 2){
 			this.player2 = new XWing("Player 2",100,250); //initial position is at x=100, y=250
+			this.player2.setType(1);
+
 			this.xwing = new XWing("XWing",200,500);
+			this.player3 = new XWing("Player 3",200,250);
+			this.player4 = new XWing("Player 4",300,500);
 
 			this.xwing.setType(0);
-			this.player2.setType(1);
+			this.player3.setType(0);
+			this.player4.setType(0);
+		}else if(playerID == 3){
+			this.player3 = new XWing("Player 3",100,250); //initial position is at x=100, y=250
+			this.player3.setType(1);
+
+			this.player2 = new XWing("Player 2",200,500);
+			this.xwing = new XWing("XWing",200,250);
+			this.player4 = new XWing("Player 4",300,500);
+
+			this.xwing.setType(0);
+			this.player2.setType(0);
+			this.player4.setType(0);
+			
+		}else{
+			this.player4 = new XWing("Player 4",100,250); //initial position is at x=100, y=250
+			this.player4.setType(1);
+
+			this.player2 = new XWing("Player 2",200,500);
+			this.player3 = new XWing("Player 3",200,250);
+			this.xwing = new XWing("XWing",300,500);
+
+			this.xwing.setType(0);
+			this.player2.setType(0);
+			this.player3.setType(0);
 		}
 		players.add(xwing);
 		players.add(player2);
+		players.add(player3);
+		players.add(player4);
 		// add players to players array list to remove them
 		System.out.println(playerID);
 	}
@@ -118,6 +154,8 @@ public class GameTimer extends AnimationTimer{
 
 		this.xwing.render(this.gc);
 		this.player2.render(this.gc);
+		this.player3.render(this.gc);
+		this.player4.render(this.gc);
 
 		this.renderPowerUps();
 		this.renderObstacles();
@@ -140,9 +178,9 @@ public class GameTimer extends AnimationTimer{
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 			playerID = in.readInt();
 			System.out.println("You are player#"+playerID);
-			if(playerID == 1){
-				System.out.println("Waiting for Player #2 to connect");
-			}
+			// if(playerID == 1){
+			// 	System.out.println("Waiting for Player #2 to connect");
+			// }
 
 			rfsRunnable = new ReadFromServer(in);
 			wtsRunnable = new WriteToServer(out);
@@ -166,10 +204,21 @@ public class GameTimer extends AnimationTimer{
                 while(true){
 					double player2X = dataIn.readDouble();
 					double player2Y = dataIn.readDouble();
-					if(player2 != null){
+					double player3X = dataIn.readDouble();
+					double player3Y = dataIn.readDouble();
+					double player4X = dataIn.readDouble();
+					double player4Y = dataIn.readDouble();
+					if(player2 != null && player3 != null){
 						player2.setX(player2X);
 						player2.setY(player2Y);
+
+						player3.setX(player3X);
+						player3.setY(player3Y);
+
+						player4.setX(player4X);
+						player4.setY(player4Y);
 					}
+
                 }
             }catch(IOException ex){
                 System.out.println("IOException from RFS run()");
