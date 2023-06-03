@@ -26,11 +26,11 @@ public class XWing extends Sprite{
 	private int stunElapsed;
 	private int stunDuration;
 
-	private final static Image PLAYER_RIGHT = new Image("images/move_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image PLAYER_LEFT = new Image("images/move_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image PLAYER_DOWN = new Image("images/move_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image PLAYER_UP = new Image("images/move_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image HAS_BOMB = new Image("images/karina_2.jpeg",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	private final static Image PLAYER_RIGHT = new Image("images/players/yellow_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER_LEFT = new Image("images/players/yellow_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER_DOWN = new Image("images/players/yellow_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER_UP = new Image("images/players/yellow_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image HAS_BOMB = new Image("images/bomb_object.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	private final static Image XWING_INVINCIBLE_IMAGE = new Image("images/x_wing_invincible.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 
 	public static final int XWING_X_POS = 100;
