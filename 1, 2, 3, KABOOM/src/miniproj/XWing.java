@@ -33,6 +33,21 @@ public class XWing extends Sprite{
 	public final static Image HAS_BOMB = new Image("images/bomb_object.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	private final static Image XWING_INVINCIBLE_IMAGE = new Image("images/x_wing_invincible.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 
+	private final static Image PLAYER2_RIGHT = new Image("images/players/red_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER2_LEFT = new Image("images/players/red_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER2_DOWN = new Image("images/players/red_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER2_UP = new Image("images/players/red_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+
+	private final static Image PLAYER3_RIGHT = new Image("images/players/green_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER3_LEFT = new Image("images/players/green_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER3_DOWN = new Image("images/players/green_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER3_UP = new Image("images/players/green_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+
+	private final static Image PLAYER4_RIGHT = new Image("images/players/yellow_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER4_LEFT = new Image("images/players/yellow_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER4_DOWN = new Image("images/players/yellow_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER4_UP = new Image("images/players/yellow_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
 	public final static double speed = 3;
@@ -113,27 +128,106 @@ public class XWing extends Sprite{
 
 	void faceRight() {
 		if(this.type == 0){
+			System.out.println("FACE RIGHT");
 			this.setImage(PLAYER_RIGHT);
 		}
 	}
 
 	void faceLeft() {
 		if(this.type == 0){
+			System.out.println("FACE LEFT");
 			this.setImage(PLAYER_LEFT);
 		}
 	}
 
 	void faceDown() {
 		if(this.type == 0){
+			System.out.println("FACE DOWN");
 			this.setImage(PLAYER_DOWN);
 		}
 	}
 
 	void faceUp() {
 		if(this.type == 0){
+			System.out.println("FACE UP");
 			this.setImage(PLAYER_UP);
 		}
 	}
+
+	//PLAYER 2 RENDERS
+		void faceRight2() {
+			if(this.type == 0){
+				this.setImage(PLAYER2_RIGHT);
+			}
+		}
+
+		void faceLeft2() {
+			if(this.type == 0){
+				this.setImage(PLAYER2_LEFT);
+			}
+		}
+
+		void faceDown2() {
+			if(this.type == 0){
+				this.setImage(PLAYER2_DOWN);
+			}
+		}
+
+		void faceUp2() {
+			if(this.type == 0){
+				this.setImage(PLAYER2_UP);
+			}
+		}
+
+	//PLAYER 3 RENDERS
+		void faceRight3() {
+			if(this.type == 0){
+				this.setImage(PLAYER3_RIGHT);
+			}
+		}
+
+		void faceLeft3() {
+			if(this.type == 0){
+				this.setImage(PLAYER3_LEFT);
+			}
+		}
+
+		void faceDown3() {
+			if(this.type == 0){
+				this.setImage(PLAYER3_DOWN);
+			}
+		}
+
+		void faceUp3() {
+			if(this.type == 0){
+				this.setImage(PLAYER3_UP);
+			}
+		}
+
+	//PLAYER 4 RENDERS
+		void faceRight4() {
+			if(this.type == 0){
+				this.setImage(PLAYER4_RIGHT);
+			}
+		}
+
+		void faceLeft4() {
+			if(this.type == 0){
+				this.setImage(PLAYER4_LEFT);
+			}
+		}
+
+		void faceDown4() {
+			if(this.type == 0){
+				this.setImage(PLAYER4_DOWN);
+			}
+		}
+
+		void faceUp4() {
+			if(this.type == 0){
+				this.setImage(PLAYER4_UP);
+			}
+		}
 
 	void makeInvincible(int invincibilityDuration) {
 		this.invincibility = true;
