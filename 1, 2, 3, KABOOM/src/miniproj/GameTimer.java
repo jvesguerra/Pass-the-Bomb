@@ -396,27 +396,22 @@ public class GameTimer extends AnimationTimer{
 		// 	if(p.isAvailable()) {
 		// 		p.checkCollision(this.xwing, p);
 		// 	}
+		// }
 
-		for(int i=0; i<this.players.size(); i++) {
-			for(int j=0; j<this.players.size(); j++) {
-				if(i != j) {
-					XWing p1 = this.players.get(i);
-					XWing p2 = this.players.get(j);
-					if(p1.collidesWith(p2)) {
-						
-						if(p1.getType() == 0 && p2.getType() == 1){
-							System.out.println("NAGBANGGAN");
-							p1.setType(1);
-							p2.setType(0);
-						}
-			
-						else if(p1.getType() == 1 && p2.getType() == 0){
-							System.out.println("BUMPED");
-							p1.setType(0);
-							p2.setType(1);
-						}
-					}
-				}
+		XWing p1 = this.players.get(0);
+		XWing p2 = this.players.get(1);
+		XWing p3 = this.players.get(2);
+		XWing p4 = this.players.get(3);
+
+		if(p1.collidesWith(p2)) {
+			if(p1.getType() == 0 && p2.getType() == 1){
+				p1.setType(1);
+				p2.setType(0);
+			}
+
+			else if(p1.getType() == 1 && p2.getType() == 0){
+				p1.setType(0);
+				p2.setType(1);
 			}
 		}
 	}
