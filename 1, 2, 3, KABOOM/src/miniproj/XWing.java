@@ -27,7 +27,7 @@ public class XWing extends Sprite{
 	private int stunElapsed;
 	private int stunDuration;
 
-	private final static Image KARINA = new Image("images/players/karina_2.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	
 	private final static Image PLAYER_RIGHT = new Image("images/players/yellow_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_LEFT = new Image("images/players/yellow_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_DOWN = new Image("images/players/yellow_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
@@ -119,17 +119,19 @@ public class XWing extends Sprite{
 	void setType(int num) {
 		this.type = num;
 		if(this.type == 1){
+			System.out.println("ALFONS");
 			this.setImage(HAS_BOMB);
 		}else{
-			// if(this.pid == 1){
-			// 	this.setImage(PLAYER_LEFT);
-			// }else if(this.pid == 2){
-			// 	this.setImage(PLAYER2_LEFT);
-			// }else if(this.pid == 3){
-			// 	this.setImage(PLAYER3_LEFT);
-			// }else{
-			// 	this.setImage(PLAYER4_LEFT);
-			// }
+			System.out.println("PATRICK");
+			if(this.pid == 1){
+				this.setImage(PLAYER_LEFT);
+			}else if(this.pid == 2){
+				this.setImage(PLAYER2_LEFT);
+			}else if(this.pid == 3){
+				this.setImage(PLAYER3_LEFT);
+			}else{
+				this.setImage(PLAYER4_LEFT);
+			}
 			
 		}
 	}
