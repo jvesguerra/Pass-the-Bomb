@@ -119,10 +119,10 @@ public class XWing extends Sprite{
 	void setType(int num) {
 		this.type = num;
 		if(this.type == 1){
-			System.out.println("ALFONS");
+			//System.out.println("ALFONS");
 			this.setImage(HAS_BOMB);
 		}else{
-			System.out.println("PATRICK");
+			//System.out.println("PATRICK");
 			if(this.pid == 1){
 				this.setImage(PLAYER_LEFT);
 			}else if(this.pid == 2){
