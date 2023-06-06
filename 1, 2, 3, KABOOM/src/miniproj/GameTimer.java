@@ -61,53 +61,68 @@ public class GameTimer extends AnimationTimer{
 		if(playerID == 1){
 			this.xwing = new XWing("XWing",100,250,1); //initial position is at x=100, y=250
 			this.xwing.setType(1);
+			players.add(xwing);
 
 			this.player2 = new XWing("Player 2",200,500,2);
-			this.player3 = new XWing("Player 3",200,250,3);
-			this.player4 = new XWing("Player 4",300,500,4);
-
 			this.player2.setType(0);
+			players.add(player2);
+
+			this.player3 = new XWing("Player 3",200,250,3);
 			this.player3.setType(0);
+			players.add(player3);
+			
+			this.player4 = new XWing("Player 4",300,500,4);
 			this.player4.setType(0);
+			players.add(player4);
 		} else if (playerID == 2){
 			this.player2 = new XWing("Player 2",100,250,1); //initial position is at x=100, y=250
 			this.player2.setType(1);
+			players.add(player2);
 
 			this.xwing = new XWing("XWing",200,500,2);
-			this.player3 = new XWing("Player 3",200,250,3);
-			this.player4 = new XWing("Player 4",300,500,4);
-
 			this.xwing.setType(0);
+			players.add(xwing);
+
+			this.player3 = new XWing("Player 3",200,250,3);
 			this.player3.setType(0);
+			players.add(player3);
+			
+			this.player4 = new XWing("Player 4",300,500,4);
 			this.player4.setType(0);
+			players.add(player4);
 		}else if(playerID == 3){
 			this.player2 = new XWing("Player 2",100,250,1); //initial position is at x=100, y=250
 			this.player2.setType(1);
+			players.add(player2);
 
 			this.player3 = new XWing("Player 3",200,500,2);
-			this.xwing = new XWing("XWing",200,250,3);
-			this.player4 = new XWing("Player 4",300,500,4);
-
-			this.xwing.setType(0);
 			this.player3.setType(0);
+			players.add(player3);
+			
+			this.xwing = new XWing("XWing",200,250,3);
+			this.xwing.setType(0);
+			players.add(xwing);
+			
+			this.player4 = new XWing("Player 4",300,500,4);
 			this.player4.setType(0);
-
+			players.add(player4);
 		}else{
 			this.player2 = new XWing("Player 2",100,250,1); //initial position is at x=100, y=250
 			this.player2.setType(1);
+			players.add(player2);
 
 			this.player4 = new XWing("Player 4",200,500,3);
-			this.player3 = new XWing("Player 3",200,250,2);
-			this.xwing = new XWing("XWing",300,500,4);
-
-			this.xwing.setType(0);
 			this.player4.setType(0);
+			players.add(player4);
+
+			this.player3 = new XWing("Player 3",200,250,2);
 			this.player3.setType(0);
+			players.add(player3);
+			
+			this.xwing = new XWing("XWing",300,500,4);
+			this.xwing.setType(0);
+			players.add(xwing);
 		}
-		players.add(xwing);
-		players.add(player2);
-		players.add(player3);
-		players.add(player4);
 		// add players to players array list to remove them
 		System.out.println(playerID);
 	}
@@ -118,8 +133,8 @@ public class GameTimer extends AnimationTimer{
 
 		if(previousSecond != (int)time && (int)time != 0) {
 			if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
-				this.removePlayer();
-				this.assignRandomBomb();
+				// this.removePlayer();
+				// this.assignRandomBomb();
 			}
 
 			// if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
@@ -129,9 +144,15 @@ public class GameTimer extends AnimationTimer{
 			// this.despawnPowerUps();
 			// this.despawnObstacles();
 
-			// if(this.xwing.isInvincible()) {
-			// 	this.xwing.setInvincibilityElapsed();
-			// }
+			if(this.xwing.isInvincible()) {
+				this.xwing.setInvincibilityElapsed();
+			} else if (this.player2.isInvincible()) {
+				this.player2.setInvincibilityElapsed();
+			} else if (this.player3.isInvincible()) {
+				this.player3.setInvincibilityElapsed();
+			} else if (this.player4.isInvincible()) {
+				this.player4.setInvincibilityElapsed();
+			}
 
 			// if(this.xwing.isSpeedUp()) {
 			// 	this.xwing.setSpeedUpElapsed();
@@ -420,11 +441,13 @@ public class GameTimer extends AnimationTimer{
 				if(p1.getType() == 0 && p2.getType() == 1){
 					p1.setType(1);
 					p2.setType(0);
+					p2.makeInvincible(3);
 				}
 	
 				else if(p1.getType() == 1 && p2.getType() == 0){
 					p1.setType(0);
 					p2.setType(1);
+					p1.makeInvincible(3);
 				}
 			}
 		}
@@ -436,11 +459,13 @@ public class GameTimer extends AnimationTimer{
 				if(p1.getType() == 0 && p3.getType() == 1){
 					p1.setType(1);
 					p3.setType(0);
+					p3.makeInvincible(3);
 				}
 	
 				else if(p1.getType() == 1 && p3.getType() == 0){
 					p1.setType(0);
 					p3.setType(1);
+					p1.makeInvincible(3);
 				}
 			}
 	
@@ -450,11 +475,13 @@ public class GameTimer extends AnimationTimer{
 				if(p2.getType() == 0 && p3.getType() == 1){
 					p2.setType(1);
 					p3.setType(0);
+					p3.makeInvincible(3);
 				}
 	
 				else if(p2.getType() == 1 && p3.getType() == 0){
 					p2.setType(0);
 					p3.setType(1);
+					p2.makeInvincible(3);
 				}
 			}
 		}
@@ -467,11 +494,13 @@ public class GameTimer extends AnimationTimer{
 				if(p1.getType() == 0 && p4.getType() == 1){
 					p1.setType(1);
 					p4.setType(0);
+					p4.makeInvincible(3);
 				}
 	
 				else if(p1.getType() == 1 && p4.getType() == 0){
 					p1.setType(0);
 					p4.setType(1);
+					p1.makeInvincible(3);
 				}
 			}
 
@@ -479,11 +508,13 @@ public class GameTimer extends AnimationTimer{
 				if(p2.getType() == 0 && p4.getType() == 1){
 					p2.setType(1);
 					p4.setType(0);
+					p2.makeInvincible(3);
 				}
 	
 				else if(p2.getType() == 1 && p4.getType() == 0){
 					p2.setType(0);
 					p4.setType(1);
+					p2.makeInvincible(3);
 				}
 			}
 	
@@ -491,11 +522,13 @@ public class GameTimer extends AnimationTimer{
 				if(p3.getType() == 0 && p4.getType() == 1){
 					p3.setType(1);
 					p4.setType(0);
+					p4.makeInvincible(3);
 				}
 	
 				else if(p3.getType() == 1 && p4.getType() == 0){
 					p3.setType(0);
 					p4.setType(1);
+					p3.makeInvincible(3);
 				}
 			}
 		}
