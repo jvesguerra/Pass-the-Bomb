@@ -44,10 +44,10 @@ public class XWing extends Sprite{
 	public final static Image PLAYER3_DOWN = new Image("images/players/green_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER3_UP = new Image("images/players/green_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 
-	private final static Image PLAYER4_RIGHT = new Image("images/players/yellow_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image PLAYER4_LEFT = new Image("images/players/yellow_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image PLAYER4_DOWN = new Image("images/players/yellow_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
-	public final static Image PLAYER4_UP = new Image("images/players/yellow_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	private final static Image PLAYER4_RIGHT = new Image("images/players/blue_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER4_LEFT = new Image("images/players/blue_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER4_DOWN = new Image("images/players/blue_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
+	public final static Image PLAYER4_UP = new Image("images/players/blue_up.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 
 	public static final int XWING_X_POS = 100;
 	public static final int XWING_Y_POS = 250;
