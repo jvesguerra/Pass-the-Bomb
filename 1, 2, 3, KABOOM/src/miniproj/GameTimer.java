@@ -117,10 +117,10 @@ public class GameTimer extends AnimationTimer{
 		double time = (currentNanoTime - currentTime)/1000000000.0;
 
 		if(previousSecond != (int)time && (int)time != 0) {
-			// if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
-			// 	this.removePlayer();
-			// 	this.assignRandomBomb();
-			// }
+			if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
+				this.removePlayer();
+				this.assignRandomBomb();
+			}
 
 			// if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
 			// 	//this.spawnPowerUps();
@@ -209,13 +209,18 @@ public class GameTimer extends AnimationTimer{
 					double player3Y = dataIn.readDouble();
 					double player4X = dataIn.readDouble();
 					double player4Y = dataIn.readDouble();
-					if(player2 != null && player3 != null){
+
+					if(player2 != null){
 						player2.setX(player2X);
 						player2.setY(player2Y);
+					}
 
+					if(player3 != null){
 						player3.setX(player3X);
 						player3.setY(player3Y);
+					}
 
+					if(player4 != null){
 						player4.setX(player4X);
 						player4.setY(player4Y);
 					}
@@ -285,13 +290,18 @@ public class GameTimer extends AnimationTimer{
 	private void gameCheck(double t) {
 		int time = (int) t; //typecasting a double to int
 
-		if(!this.xwing.isAlive()) { //the player loses the game (xwing died)
+		if(this.players.size() == 1){
 			this.gameStage.flashGameOver(0, this.xwing.getScore());
 			this.stop();
-		} else if(time >= 60) { //the player wins the game
-			this.gameStage.flashGameOver(1, this.xwing.getScore());
-			this.stop();
 		}
+
+		// if(!this.xwing.isAlive()) { //the player loses the game (xwing died)
+		// 	this.gameStage.flashGameOver(0, this.xwing.getScore());
+		// 	this.stop();
+		// } else if(time >= 60) { //the player wins the game
+		// 	this.gameStage.flashGameOver(1, this.xwing.getScore());
+		// 	this.stop();
+		// }
 	}
 
 	private void renderPowerUps() {
@@ -336,6 +346,7 @@ public class GameTimer extends AnimationTimer{
 		for(int i=0;i<this.players.size();i++){
 			XWing p = this.players.get(i);
 			if(p.getType() == 1) {
+				p.setVisible(false);
 				this.players.remove(p);
 			}
 		}
@@ -397,81 +408,94 @@ public class GameTimer extends AnimationTimer{
 		// 		p.checkCollision(this.xwing, p);
 		// 	}
 		// }
+		XWing p1,p2,p3,p4;
+		int length = this.players.size();
 
-		XWing p1 = this.players.get(0);
-		XWing p2 = this.players.get(1);
-		XWing p3 = this.players.get(2);
-		XWing p4 = this.players.get(3);
+		p1 = this.players.get(0);
 
-		if(p1.collidesWith(p2)) {
-			if(p1.getType() == 0 && p2.getType() == 1){
-				p1.setType(1);
-				p2.setType(0);
-			}
-
-			else if(p1.getType() == 1 && p2.getType() == 0){
-				p1.setType(0);
-				p2.setType(1);
-			}
-		}
-
-		if(p1.collidesWith(p3)) {
-			if(p1.getType() == 0 && p3.getType() == 1){
-				p1.setType(1);
-				p3.setType(0);
-			}
-
-			else if(p1.getType() == 1 && p3.getType() == 0){
-				p1.setType(0);
-				p3.setType(1);
+		if(length == 2){
+			p2 = this.players.get(1);
+			if(p1.collidesWith(p2)) {
+				if(p1.getType() == 0 && p2.getType() == 1){
+					p1.setType(1);
+					p2.setType(0);
+				}
+	
+				else if(p1.getType() == 1 && p2.getType() == 0){
+					p1.setType(0);
+					p2.setType(1);
+				}
 			}
 		}
 
-		if(p1.collidesWith(p4)) {
-			if(p1.getType() == 0 && p4.getType() == 1){
-				p1.setType(1);
-				p4.setType(0);
+		if(length == 3){
+			p2 = this.players.get(1);
+			p3 = this.players.get(2);
+			if(p1.collidesWith(p3)) {
+				if(p1.getType() == 0 && p3.getType() == 1){
+					p1.setType(1);
+					p3.setType(0);
+				}
+	
+				else if(p1.getType() == 1 && p3.getType() == 0){
+					p1.setType(0);
+					p3.setType(1);
+				}
 			}
-
-			else if(p1.getType() == 1 && p4.getType() == 0){
-				p1.setType(0);
-				p4.setType(1);
-			}
-		}
-
-		if(p2.collidesWith(p3)) {
-			if(p2.getType() == 0 && p3.getType() == 1){
-				p2.setType(1);
-				p3.setType(0);
-			}
-
-			else if(p2.getType() == 1 && p3.getType() == 0){
-				p2.setType(0);
-				p3.setType(1);
-			}
-		}
-
-		if(p2.collidesWith(p4)) {
-			if(p2.getType() == 0 && p4.getType() == 1){
-				p2.setType(1);
-				p4.setType(0);
-			}
-
-			else if(p2.getType() == 1 && p4.getType() == 0){
-				p2.setType(0);
-				p4.setType(1);
+	
+	
+	
+			if(p2.collidesWith(p3)) {
+				if(p2.getType() == 0 && p3.getType() == 1){
+					p2.setType(1);
+					p3.setType(0);
+				}
+	
+				else if(p2.getType() == 1 && p3.getType() == 0){
+					p2.setType(0);
+					p3.setType(1);
+				}
 			}
 		}
 
-		if(p3.collidesWith(p4)) {
-			if(p3.getType() == 0 && p4.getType() == 1){
-				p3.setType(1);
-				p4.setType(0);
+		if(length == 4){
+			p2 = this.players.get(1);
+			p3 = this.players.get(2);
+			p4 = this.players.get(3);
+			if(p1.collidesWith(p4)) {
+				if(p1.getType() == 0 && p4.getType() == 1){
+					p1.setType(1);
+					p4.setType(0);
+				}
+	
+				else if(p1.getType() == 1 && p4.getType() == 0){
+					p1.setType(0);
+					p4.setType(1);
+				}
 			}
 
-			else if(p3.getType() == 1 && p4.getType() == 0){
-				p3.setType(0);
-				p4.setType(1);
+			if(p2.collidesWith(p4)) {
+				if(p2.getType() == 0 && p4.getType() == 1){
+					p2.setType(1);
+					p4.setType(0);
+				}
+	
+				else if(p2.getType() == 1 && p4.getType() == 0){
+					p2.setType(0);
+					p4.setType(1);
+				}
+			}
+	
+			if(p3.collidesWith(p4)) {
+				if(p3.getType() == 0 && p4.getType() == 1){
+					p3.setType(1);
+					p4.setType(0);
+				}
+	
+				else if(p3.getType() == 1 && p4.getType() == 0){
+					p3.setType(0);
+					p4.setType(1);
+				}
 			}
 		}
 		
