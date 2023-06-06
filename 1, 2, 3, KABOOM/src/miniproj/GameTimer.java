@@ -133,8 +133,8 @@ public class GameTimer extends AnimationTimer{
 
 		if(previousSecond != (int)time && (int)time != 0) {
 			if((int)(time%GameTimer.EXPLOTION_TIME) == 0) {
-				// this.removePlayer();
-				// this.assignRandomBomb();
+				this.removePlayer();
+				this.assignRandomBomb();
 			}
 
 			// if((int)time%GameTimer.POWERUP_SPAWN_TIME == 0) {
@@ -377,7 +377,7 @@ public class GameTimer extends AnimationTimer{
 	private void assignRandomBomb(){
 		Random r = new Random();
 		int i = r.nextInt(this.players.size());
-		XWing p = this.players.get(i);
+		XWing p = this.players.get(0);
 		p.setType(1);
 	}
 

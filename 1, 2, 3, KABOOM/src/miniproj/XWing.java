@@ -252,7 +252,7 @@ public class XWing extends Sprite{
 	void makeInvincible(int invincibilityDuration) {
 		this.invincibility = true;
 		this.invincibilityElapsed = 0;
-		this.setImage(XWING_INVINCIBLE_IMAGE);
+		// this.setImage(XWING_INVINCIBLE_IMAGE);
 		this.invincibilityDuration = invincibilityDuration;
 	}
 
