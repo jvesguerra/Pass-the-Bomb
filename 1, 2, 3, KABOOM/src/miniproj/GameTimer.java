@@ -81,27 +81,27 @@ public class GameTimer extends AnimationTimer{
 			this.player3.setType(0);
 			this.player4.setType(0);
 		}else if(playerID == 3){
-			this.player3 = new XWing("Player 3",100,250,1); //initial position is at x=100, y=250
-			this.player3.setType(1);
+			this.player2 = new XWing("Player 2",100,250,1); //initial position is at x=100, y=250
+			this.player2.setType(1);
 
-			this.player2 = new XWing("Player 2",200,500,2);
+			this.player3 = new XWing("Player 3",200,500,2);
 			this.xwing = new XWing("XWing",200,250,3);
 			this.player4 = new XWing("Player 4",300,500,4);
 
 			this.xwing.setType(0);
-			this.player2.setType(0);
+			this.player3.setType(0);
 			this.player4.setType(0);
 
 		}else{
-			this.player4 = new XWing("Player 4",100,250,1); //initial position is at x=100, y=250
-			this.player4.setType(1);
+			this.player2 = new XWing("Player 2",100,250,1); //initial position is at x=100, y=250
+			this.player2.setType(1);
 
-			this.player2 = new XWing("Player 2",200,500,2);
-			this.player3 = new XWing("Player 3",200,250,3);
+			this.player4 = new XWing("Player 4",200,500,3);
+			this.player3 = new XWing("Player 3",200,250,2);
 			this.xwing = new XWing("XWing",300,500,4);
 
 			this.xwing.setType(0);
-			this.player2.setType(0);
+			this.player4.setType(0);
 			this.player3.setType(0);
 		}
 		players.add(xwing);
@@ -160,7 +160,7 @@ public class GameTimer extends AnimationTimer{
 
 		this.renderPowerUps();
 		this.renderObstacles();
-		this.gameCheck(time);
+		//this.gameCheck(time);
 		this.drawDetails(time);
 
 		this.xwing.move();
