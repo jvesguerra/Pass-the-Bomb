@@ -414,6 +414,67 @@ public class GameTimer extends AnimationTimer{
 				p2.setType(1);
 			}
 		}
+
+		if(p1.collidesWith(p3)) {
+			if(p1.getType() == 0 && p3.getType() == 1){
+				p1.setType(1);
+				p3.setType(0);
+			}
+
+			else if(p1.getType() == 1 && p3.getType() == 0){
+				p1.setType(0);
+				p3.setType(1);
+			}
+		}
+
+		if(p1.collidesWith(p4)) {
+			if(p1.getType() == 0 && p4.getType() == 1){
+				p1.setType(1);
+				p4.setType(0);
+			}
+
+			else if(p1.getType() == 1 && p4.getType() == 0){
+				p1.setType(0);
+				p4.setType(1);
+			}
+		}
+
+		if(p2.collidesWith(p3)) {
+			if(p2.getType() == 0 && p3.getType() == 1){
+				p2.setType(1);
+				p3.setType(0);
+			}
+
+			else if(p2.getType() == 1 && p3.getType() == 0){
+				p2.setType(0);
+				p3.setType(1);
+			}
+		}
+
+		if(p2.collidesWith(p4)) {
+			if(p2.getType() == 0 && p4.getType() == 1){
+				p2.setType(1);
+				p4.setType(0);
+			}
+
+			else if(p2.getType() == 1 && p4.getType() == 0){
+				p2.setType(0);
+				p4.setType(1);
+			}
+		}
+
+		if(p3.collidesWith(p4)) {
+			if(p3.getType() == 0 && p4.getType() == 1){
+				p3.setType(1);
+				p4.setType(0);
+			}
+
+			else if(p3.getType() == 1 && p4.getType() == 0){
+				p3.setType(0);
+				p4.setType(1);
+			}
+		}
+		
 	}
 
 	//method that will listen and handle the key press events
