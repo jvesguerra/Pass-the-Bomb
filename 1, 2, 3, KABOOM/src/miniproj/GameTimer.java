@@ -90,7 +90,7 @@ public class GameTimer extends AnimationTimer{
 			this.xwing.setType(0);
 			this.player2.setType(0);
 			this.player4.setType(0);
-			
+
 		}else{
 			this.player4 = new XWing("Player 4",100,250); //initial position is at x=100, y=250
 			this.player4.setType(1);
@@ -169,7 +169,7 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	// NETWORKING	
+	// NETWORKING
 	// connect to server
 	private void connectToServer(){
 		try{
@@ -421,24 +421,110 @@ public class GameTimer extends AnimationTimer{
 	//method that will move the XWing depending on the key pressed
 	private void moveXWing(KeyCode ke) { //should move 5 pixels
 		if(ke==KeyCode.UP){
+			/*
 			this.xwing.setDY(-1*XWing.XWING_SPEED);
 			this.xwing.faceUp();
+			*/
+
+			if(playerID == 1){
+				//System.out.println("PLAYER 1 UP BUTTON");
+				this.xwing.setDY(-1*XWing.XWING_SPEED);
+				this.xwing.faceUp();
+			}
+			else if (playerID == 2){
+				//System.out.println("PLAYER 2 UP BUTTON");
+				this.xwing.setDY(-1*XWing.XWING_SPEED);
+				this.xwing.faceUp2();
+			}
+			else if (playerID == 3){
+				//System.out.println("PLAYER 3 UP BUTTON");
+				this.xwing.setDY(-1*XWing.XWING_SPEED);
+				this.xwing.faceUp3();
+			}
+			else if (playerID == 4){
+				//System.out.println("PLAYER 4 UP BUTTON");
+				this.xwing.setDY(-1*XWing.XWING_SPEED);
+				this.xwing.faceUp4();
+			}
 		}
 
 		if(ke==KeyCode.LEFT){
+			/*
 			this.xwing.setDX(-1*XWing.XWING_SPEED);
 			this.xwing.faceLeft();
+			*/
+
+			if(playerID == 1){
+				this.xwing.setDX(-1*XWing.XWING_SPEED);
+				this.xwing.faceLeft();
+			}
+			else if (playerID == 2){
+				this.xwing.setDX(-1*XWing.XWING_SPEED);
+				this.xwing.faceLeft2();
+			}
+			else if (playerID == 3){
+				this.xwing.setDX(-1*XWing.XWING_SPEED);
+				this.xwing.faceLeft3();
+			}
+			else if (playerID == 4){
+				this.xwing.setDX(-1*XWing.XWING_SPEED);
+				this.xwing.faceLeft4();
+			}
+
 		}
 
 		if(ke==KeyCode.DOWN){
+			/*
 			this.xwing.setDY(XWing.XWING_SPEED);
 			this.xwing.faceDown();
+			*/
+
+			if(playerID == 1){
+				System.out.println("PLAYER 1 DOWN BUTTON");
+				this.xwing.setDY(XWing.XWING_SPEED);
+				this.xwing.faceDown();
+			}
+			else if (playerID == 2){
+				System.out.println("PLAYER 2 DOWN BUTTON");
+				this.xwing.setDY(XWing.XWING_SPEED);
+				this.xwing.faceDown2();
+			}
+			else if (playerID == 3){
+				System.out.println("PLAYER 3 DOWN BUTTON");
+				this.xwing.setDY(XWing.XWING_SPEED);
+				this.xwing.faceDown3();
+			}
+			else if (playerID == 4){
+				System.out.println("PLAYER 4 DOWN BUTTON");
+				this.xwing.setDY(XWing.XWING_SPEED);
+				this.xwing.faceDown4();
+			}
 
 		}
 
 		if(ke==KeyCode.RIGHT){
+			/*
 			this.xwing.setDX(XWing.XWING_SPEED);
 			this.xwing.faceRight();
+			*/
+
+			if(playerID == 1){
+				this.xwing.setDX(XWing.XWING_SPEED);
+				this.xwing.faceRight();
+			}
+			else if (playerID == 2){
+				this.xwing.setDX(XWing.XWING_SPEED);
+				this.xwing.faceRight2();
+			}
+			else if (playerID == 3){
+				this.xwing.setDX(XWing.XWING_SPEED);
+				this.xwing.faceRight3();
+			}
+			else if (playerID == 4){
+				this.xwing.setDX(XWing.XWING_SPEED);
+				this.xwing.faceRight4();
+			}
+
 		}
 
 		//System.out.println(ke+" key pressed.");
