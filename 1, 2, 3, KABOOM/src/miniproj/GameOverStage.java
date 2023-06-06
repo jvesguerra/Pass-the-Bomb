@@ -63,7 +63,7 @@ public class GameOverStage {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
 		if(this.num == 0) { //loses the game
-			Image bg = new Image("images/game_lose.png",GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT,false,false); //change natin to into picture ng loser
+			Image bg = new Image("images/game_win.png",GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT,false,false); //change natin to into picture ng loser
 			gc.drawImage(bg, 0, 0);
 		} else { //wins the game
 			Image bg = new Image("images/game_win.png",GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT,false,false); //change natin to into picture ng winner

@@ -35,7 +35,7 @@ public class GameTimer extends AnimationTimer{
 
 	public static final int PLAYERS = 3;
 	public static final double SPAWN_TIME = 5.0d;
-	public static final double EXPLOTION_TIME = 5.0d;
+	public static final double EXPLOTION_TIME = 10.0d;
 	public static final double POWERUP_SPAWN_TIME = 5.0d;
 
 	// NETWORK
@@ -43,7 +43,7 @@ public class GameTimer extends AnimationTimer{
 	private WriteToServer wtsRunnable;
 	private Socket socket;
 
-
+	public final Image p1_win = new Image("images/game_win.png",GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT,false,false);
 	public final Image bg = new Image("images/background.jpg",GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT,false,false);
 
 	//GameTimer(GraphicsContext gc, Scene theScene, GameStage gameStage, int playerID){
@@ -160,7 +160,7 @@ public class GameTimer extends AnimationTimer{
 
 		this.renderPowerUps();
 		this.renderObstacles();
-		//this.gameCheck(time);
+		this.gameCheck(time);
 		this.drawDetails(time);
 
 		this.xwing.move();
@@ -347,6 +347,7 @@ public class GameTimer extends AnimationTimer{
 			XWing p = this.players.get(i);
 			if(p.getType() == 1) {
 				p.setVisible(false);
+				p.Dead();
 				this.players.remove(p);
 			}
 		}

@@ -27,7 +27,7 @@ public class XWing extends Sprite{
 	private int stunElapsed;
 	private int stunDuration;
 
-	
+	private final static Image DEAD = new Image("images/players/player_dead.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	private final static Image PLAYER_RIGHT = new Image("images/players/yellow_right.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_LEFT = new Image("images/players/yellow_left.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
 	public final static Image PLAYER_DOWN = new Image("images/players/yellow_down.png",XWing.XWING_SIZE,XWing.XWING_SIZE,false,false);
@@ -146,6 +146,10 @@ public class XWing extends Sprite{
 			System.out.println("FACE RIGHT");
 			this.setImage(PLAYER_RIGHT);
 		}
+	}
+
+	void Dead(){
+		this.setImage(DEAD);
 	}
 
 	void faceLeft() {
