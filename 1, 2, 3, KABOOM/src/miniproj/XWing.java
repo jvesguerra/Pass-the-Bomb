@@ -17,6 +17,7 @@ public class XWing extends Sprite{
 	private int type = 0; // 0 has a bomb; 1 no bomb
 	private int score = 0;
 	private boolean moveRight;
+	private int pid;
 
 	private ArrayList<Bullet> bullets;
 	private int speedDownElapsed;
@@ -57,7 +58,7 @@ public class XWing extends Sprite{
 	public static double XWING_SPEED = 3;
 
 
-	public XWing(String name, int x, int y){
+	public XWing(String name, int x, int y, int pid){
 		super(x,y,XWing.PLAYER_LEFT);
 		this.name = name;
 		Random r = new Random();
@@ -68,6 +69,7 @@ public class XWing extends Sprite{
 		this.speedDown = false;
 		this.stun = false;
 		this.moveRight = false;
+		this.pid = pid;
 
 		this.bullets = new ArrayList<Bullet>();
 	}
@@ -118,10 +120,20 @@ public class XWing extends Sprite{
 		if(this.type == 1){
 			this.setImage(HAS_BOMB);
 		}else{
-			this.setImage(PLAYER_LEFT);
+			if(this.pid == 1){
+				this.setImage(PLAYER_LEFT);
+			}else if(this.pid == 2){
+				this.setImage(PLAYER2_LEFT);
+			}else if(this.pid == 3){
+				this.setImage(PLAYER3_LEFT);
+			}else{
+				this.setImage(PLAYER4_LEFT);
+			}
+			
 		}
 	}
 
+	
 	void die(){
     	this.alive = false;
     }

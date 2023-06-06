@@ -59,45 +59,46 @@ public class GameTimer extends AnimationTimer{
 		this.connectToServer();
 		// initialize xwing
 		if(playerID == 1){
-			this.xwing = new XWing("XWing",100,250); //initial position is at x=100, y=250
+			this.xwing = new XWing("XWing",100,250,1); //initial position is at x=100, y=250
 			this.xwing.setType(1);
 
-			this.player2 = new XWing("Player 2",200,500);
-			this.player3 = new XWing("Player 3",200,250);
-			this.player4 = new XWing("Player 4",300,500);
+			this.player2 = new XWing("Player 2",200,500,2);
+			this.player3 = new XWing("Player 3",200,250,3);
+			this.player4 = new XWing("Player 4",300,500,4);
 
 			this.player2.setType(0);
 			this.player3.setType(0);
+			this.player4.setType(0);
 		} else if (playerID == 2){
-			this.player2 = new XWing("Player 2",100,250); //initial position is at x=100, y=250
+			this.player2 = new XWing("Player 2",100,250,1); //initial position is at x=100, y=250
 			this.player2.setType(1);
 
-			this.xwing = new XWing("XWing",200,500);
-			this.player3 = new XWing("Player 3",200,250);
-			this.player4 = new XWing("Player 4",300,500);
+			this.xwing = new XWing("XWing",200,500,2);
+			this.player3 = new XWing("Player 3",200,250,3);
+			this.player4 = new XWing("Player 4",300,500,4);
 
 			this.xwing.setType(0);
 			this.player3.setType(0);
 			this.player4.setType(0);
 		}else if(playerID == 3){
-			this.player3 = new XWing("Player 3",100,250); //initial position is at x=100, y=250
+			this.player3 = new XWing("Player 3",100,250,1); //initial position is at x=100, y=250
 			this.player3.setType(1);
 
-			this.player2 = new XWing("Player 2",200,500);
-			this.xwing = new XWing("XWing",200,250);
-			this.player4 = new XWing("Player 4",300,500);
+			this.player2 = new XWing("Player 2",200,500,2);
+			this.xwing = new XWing("XWing",200,250,3);
+			this.player4 = new XWing("Player 4",300,500,4);
 
 			this.xwing.setType(0);
 			this.player2.setType(0);
 			this.player4.setType(0);
 
 		}else{
-			this.player4 = new XWing("Player 4",100,250); //initial position is at x=100, y=250
+			this.player4 = new XWing("Player 4",100,250,1); //initial position is at x=100, y=250
 			this.player4.setType(1);
 
-			this.player2 = new XWing("Player 2",200,500);
-			this.player3 = new XWing("Player 3",200,250);
-			this.xwing = new XWing("XWing",300,500);
+			this.player2 = new XWing("Player 2",200,500,2);
+			this.player3 = new XWing("Player 3",200,250,3);
+			this.xwing = new XWing("XWing",300,500,4);
 
 			this.xwing.setType(0);
 			this.player2.setType(0);
@@ -418,6 +419,7 @@ public class GameTimer extends AnimationTimer{
 		        });
     }
 
+	
 	//method that will move the XWing depending on the key pressed
 	private void moveXWing(KeyCode ke) { //should move 5 pixels
 		if(ke==KeyCode.UP){
