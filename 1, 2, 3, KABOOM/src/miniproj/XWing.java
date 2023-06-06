@@ -150,6 +150,7 @@ public class XWing extends Sprite{
 
 	void Dead(){
 		this.setImage(DEAD);
+		//XWing.XWING_SPEED -= 3;
 	}
 
 	void faceLeft() {
