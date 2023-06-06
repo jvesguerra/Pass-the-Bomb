@@ -396,9 +396,9 @@ public class GameTimer extends AnimationTimer{
 			if(p.isAvailable()) {
 				p.checkCollision(this.xwing, p);
 			}
-			else {
-				this.players.remove(i);
-			}
+			// else {
+			// 	this.players.remove(i);
+			// }
 		}
 	}
 

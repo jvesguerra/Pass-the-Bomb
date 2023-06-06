@@ -328,18 +328,10 @@ public class XWing extends Sprite{
 
 	void checkCollision(XWing xwing, XWing dest) {
 		if(this.collidesWith(xwing)) {
-			xwing.makeInvincible(5);
-			dest.makeInvincible(5);
-
-			if(xwing.getType() == 0){
+			if(xwing.getType() == 0 && dest.getType() == 1){
 				xwing.setType(1);
 				dest.setType(0);
-			}else{
-				xwing.setType(0);
-				dest.setType(1);
 			}
-
-
 		}
 	}
 
