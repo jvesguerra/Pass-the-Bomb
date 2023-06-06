@@ -332,6 +332,11 @@ public class XWing extends Sprite{
 				xwing.setType(1);
 				dest.setType(0);
 			}
+
+			else if(xwing.getType() == 1 && dest.getType() == 0){
+				xwing.setType(0);
+				dest.setType(1);
+			}
 		}
 	}
 
