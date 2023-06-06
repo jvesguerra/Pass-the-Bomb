@@ -556,39 +556,30 @@ public class GameTimer extends AnimationTimer{
 	//method that will move the XWing depending on the key pressed
 	private void moveXWing(KeyCode ke) { //should move 5 pixels
 		if(ke==KeyCode.UP){
-			/*
-			this.xwing.setDY(-1*XWing.XWING_SPEED);
-			this.xwing.faceUp();
-			*/
-
 			if(playerID == 1){
-				//System.out.println("PLAYER 1 UP BUTTON");
+				/*
+				if(this.xwing.getType() == 1){
+					
+				} else {}
+				*/
 				this.xwing.setDY(-1*XWing.XWING_SPEED);
 				this.xwing.faceUp();
 			}
 			else if (playerID == 2){
-				//System.out.println("PLAYER 2 UP BUTTON");
 				this.xwing.setDY(-1*XWing.XWING_SPEED);
 				this.xwing.faceUp2();
 			}
 			else if (playerID == 3){
-				//System.out.println("PLAYER 3 UP BUTTON");
 				this.xwing.setDY(-1*XWing.XWING_SPEED);
 				this.xwing.faceUp3();
 			}
 			else if (playerID == 4){
-				//System.out.println("PLAYER 4 UP BUTTON");
 				this.xwing.setDY(-1*XWing.XWING_SPEED);
 				this.xwing.faceUp4();
 			}
 		}
 
 		if(ke==KeyCode.LEFT){
-			/*
-			this.xwing.setDX(-1*XWing.XWING_SPEED);
-			this.xwing.faceLeft();
-			*/
-
 			if(playerID == 1){
 				this.xwing.setDX(-1*XWing.XWING_SPEED);
 				this.xwing.faceLeft();
@@ -609,28 +600,19 @@ public class GameTimer extends AnimationTimer{
 		}
 
 		if(ke==KeyCode.DOWN){
-			/*
-			this.xwing.setDY(XWing.XWING_SPEED);
-			this.xwing.faceDown();
-			*/
-
 			if(playerID == 1){
-				//System.out.println("PLAYER 1 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown();
 			}
 			else if (playerID == 2){
-				//System.out.println("PLAYER 2 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown2();
 			}
 			else if (playerID == 3){
-				//System.out.println("PLAYER 3 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown3();
 			}
 			else if (playerID == 4){
-				//System.out.println("PLAYER 4 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown4();
 			}
@@ -638,11 +620,6 @@ public class GameTimer extends AnimationTimer{
 		}
 
 		if(ke==KeyCode.RIGHT){
-			/*
-			this.xwing.setDX(XWing.XWING_SPEED);
-			this.xwing.faceRight();
-			*/
-
 			if(playerID == 1){
 				this.xwing.setDX(XWing.XWING_SPEED);
 				this.xwing.faceRight();
