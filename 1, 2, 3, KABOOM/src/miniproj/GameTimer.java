@@ -419,6 +419,7 @@ public class GameTimer extends AnimationTimer{
 		        });
     }
 
+	
 	//method that will move the XWing depending on the key pressed
 	private void moveXWing(KeyCode ke) { //should move 5 pixels
 		if(ke==KeyCode.UP){

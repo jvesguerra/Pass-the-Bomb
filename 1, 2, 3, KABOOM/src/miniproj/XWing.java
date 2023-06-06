@@ -133,6 +133,7 @@ public class XWing extends Sprite{
 		}
 	}
 
+	
 	void die(){
     	this.alive = false;
     }
