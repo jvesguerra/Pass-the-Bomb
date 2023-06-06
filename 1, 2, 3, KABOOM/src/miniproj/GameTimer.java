@@ -391,14 +391,20 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void checkPlayerCollision() {
+		// for(int i=0; i<this.players.size(); i++) {
+		// 	XWing p = this.players.get(i);
+		// 	if(p.isAvailable()) {
+		// 		p.checkCollision(this.xwing, p);
+		// 	}
+
 		for(int i=0; i<this.players.size(); i++) {
-			XWing p = this.players.get(i);
-			if(p.isAvailable()) {
-				p.checkCollision(this.xwing, p);
+			for(int j=0; i<this.players.size(); i++) {
+				XWing p1 = this.players.get(i);
+				XWing p2 = this.players.get(j);
+				if(i != j) {
+					p1.checkCollision(p1, p2);
+				}
 			}
-			// else {
-			// 	this.players.remove(i);
-			// }
 		}
 	}
 
