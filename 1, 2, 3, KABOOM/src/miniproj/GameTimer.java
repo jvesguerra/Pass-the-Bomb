@@ -398,11 +398,24 @@ public class GameTimer extends AnimationTimer{
 		// 	}
 
 		for(int i=0; i<this.players.size(); i++) {
-			for(int j=0; i<this.players.size(); i++) {
-				XWing p1 = this.players.get(i);
-				XWing p2 = this.players.get(j);
+			for(int j=0; j<this.players.size(); j++) {
 				if(i != j) {
-					p1.checkCollision(p1, p2);
+					XWing p1 = this.players.get(i);
+					XWing p2 = this.players.get(j);
+					if(p1.collidesWith(p2)) {
+						
+						if(p1.getType() == 0 && p2.getType() == 1){
+							System.out.println("NAGBANGGAN");
+							p1.setType(1);
+							p2.setType(0);
+						}
+			
+						else if(p1.getType() == 1 && p2.getType() == 0){
+							System.out.println("BUMPED");
+							p1.setType(0);
+							p2.setType(1);
+						}
+					}
 				}
 			}
 		}
@@ -488,22 +501,22 @@ public class GameTimer extends AnimationTimer{
 			*/
 
 			if(playerID == 1){
-				System.out.println("PLAYER 1 DOWN BUTTON");
+				//System.out.println("PLAYER 1 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown();
 			}
 			else if (playerID == 2){
-				System.out.println("PLAYER 2 DOWN BUTTON");
+				//System.out.println("PLAYER 2 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown2();
 			}
 			else if (playerID == 3){
-				System.out.println("PLAYER 3 DOWN BUTTON");
+				//System.out.println("PLAYER 3 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown3();
 			}
 			else if (playerID == 4){
-				System.out.println("PLAYER 4 DOWN BUTTON");
+				//System.out.println("PLAYER 4 DOWN BUTTON");
 				this.xwing.setDY(XWing.XWING_SPEED);
 				this.xwing.faceDown4();
 			}
