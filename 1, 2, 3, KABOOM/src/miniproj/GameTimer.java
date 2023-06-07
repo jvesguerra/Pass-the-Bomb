@@ -113,11 +113,12 @@ public class GameTimer extends AnimationTimer{
 
 			this.player4 = new XWing("Player 4",200,500,3);
 			this.player4.setType(0);
-			players.add(player4);
+			
 
 			this.player3 = new XWing("Player 3",200,250,2);
 			this.player3.setType(0);
 			players.add(player3);
+			players.add(player4);
 			
 			this.xwing = new XWing("XWing",300,500,4);
 			this.xwing.setType(0);
